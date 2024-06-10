@@ -1,10 +1,13 @@
 .navbar {
-    background-color: rgb(33, 33, 33);
+    position: fixed;
+    background-color: #222831;
     display: flex;
     height: 60px;
     font-family: "Lato";
     justify-content: space-between;
     align-items: center;
+    width: 100vw;
+    z-index: 100;
 }
 
 .logo {
@@ -13,9 +16,14 @@
 }
 
 .heading {
-    margin: auto ;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     font-weight: 800;
-    font-size: 18px;
+    /* font-size: 18px; */
+    white-space: nowrap;
+    animation: to-top; 
+    animation-timeline: scroll();
 }
 .menu {
     display: flex;
@@ -30,6 +38,30 @@
 
 a {
     text-decoration: none;
-    color: white;
+    color: #EEEEEE;
 }
 
+@keyframes to-top {
+    0%{
+        top: 500%;
+        font-size: 15vh;
+        /* text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); */
+    }
+
+    30% {
+        top: 300%;
+        font-size: 7vh;
+    }
+
+    70% {
+        top: 300%;
+        font-size: 7vh;
+        /* text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); */
+    }
+    100% {
+        top: 16%;
+        font-size: 18px;
+        box-shadow: 0;
+        /* text-shadow: 0px 0px 0px rgba(0, 0, 0, 0.5); */
+    }
+}
