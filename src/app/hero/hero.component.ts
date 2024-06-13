@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {MatButtonModule} from '@angular/material/button';
+
 
 @Component({
   selector: 'app-hero',
@@ -6,5 +8,4 @@ import { Component } from '@angular/core';
   styleUrl: './hero.component.css'
 })
 export class HeroComponent {
-
 }

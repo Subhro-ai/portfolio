@@ -1,3 +1,8 @@
+/* .spacer {
+    height: 100px;
+    background-color: #393E46;
+} */
+
 .container {
     background-color: #393E46;
     height: 200vh;
@@ -30,15 +35,19 @@
         opacity: 100%;
         top: 40%;
     }
-    95% {
+    70% {
+        filter: blur(0px);
         opacity: 100%;
         top: 40%;
         position: fixed;
     }
     100% {
+        filter: blur(5px);
         opacity: 0%;
         top: 30%;
+        visibility: 0;
     }
+    
 }
 
 
