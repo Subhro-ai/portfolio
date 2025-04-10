@@ -1,45 +1,59 @@
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-  
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  
-  :host {
-    display: block;
-    height: 200vh;
-    width: 100%;
-    /* align-items: center; */
-    justify-content: center;
-    padding: 0 2rem; /* optional horizontal padding */
-  }
-  
+:host {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  justify-content: center;
+  padding: 0; /* Removed horizontal padding */
+  margin: 0; /* Added to ensure no margin */
+  z-index: 1;
+}
+
+.hero-section {
+  height: 200vh; /* Makes the section scrollable */
+  position: relative;
+  overflow: hidden;
+  margin: 0; /* Ensure no margin */
+  padding: 0; /* Ensure no padding */
+  width: 100%;
+}
+
 .hero {
   height: 100vh;
   width: 100%;
   display: flex;
+  margin-top: 0; /* Changed from -50px to remove negative margin */
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  position: relative;
 }
 
 .hero-title {
-  transform: translateX(20px);
-  opacity: 0;
+  transform: translateX(0); /* Removed horizontal shift */
   z-index: 10;
-  margin-top: -30px;
-    font-size: 7vw;
-    font-weight: 700;
-    color: --primary-color;
-    text-align: center;
-    position: relative; /* Required for GSAP transforms */
+  margin-top: 0; /* Removed negative margin */
+  font-size: 7vw;
+  font-weight: 700;
+  color: var(--primary-color);
+  text-align: center;
+  position: relative; /* Required for GSAP transforms */
   transform-origin: center; 
-
 }
 
-.subtitle {
+.hero-subtitle {
+  position: relative; /* Changed from fixed to relative */
   display: block;
+  transform: translateY(20px); /* Added space between title and subtitle */
+  margin-top: 20px; /* Additional space between title and subtitle */
+  font-size: 2vw; /* Added responsive font size */
+  z-index: 10; /* Ensure it's above the blobs */
 }
 
 .blob-container-1 {
@@ -48,7 +62,6 @@
   left: 50%;
   width: 80%;
   height: 100%;
-  /* overflow: hidden; */
   z-index: 0; /* Ensure the blob is behind the text */
 }
 
@@ -58,11 +71,5 @@
   left: -30%;
   width: 70%;
   height: 100%;
-  /* overflow: hidden; */
   z-index: -1; /* Ensure the blob is behind the text */
-}
-
-.hero-subtitle {
-  opacity: 0;
-  transform: translateY(20px);
 }

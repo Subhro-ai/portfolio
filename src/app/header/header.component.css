@@ -1,3 +1,51 @@
-.navbar {
-    margin: 200px;
-}
+:host {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    width: 100%;
+    display: block;
+  }
+  
+  /* Glassmorphism effect for the menubar */
+  ::ng-deep .p-menubar {
+    /* Base styles */
+    border-radius: 0 !important;
+    padding: 0.5rem 1rem !important;
+    width: 100% !important;
+    margin: 0 !important;
+    
+    /* Glassmorphism effect */
+    background: rgba(255, 255, 255, 0.2) !important; /* Light transparent background */
+    backdrop-filter: blur(8px) !important; /* Creates the frosted glass effect */
+    -webkit-backdrop-filter: blur(8px) !important; /* For Safari */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18) !important; /* Subtle border */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important; /* Soft shadow */
+  }
+  
+  /* Dark mode adjustment for glassmorphism */
+  :host-context(.my-app-dark) ::ng-deep .p-menubar {
+    background: rgba(0, 0, 0, 0.2) !important; /* Dark transparent background */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  }
+  
+  /* Ensure text is readable with the transparent background */
+  ::ng-deep .p-menubar .p-menuitem-text,
+  ::ng-deep .p-menubar .p-menuitem-icon {
+    color: var(--text-color, #000) !important;
+  }
+  
+  :host-context(.my-app-dark) ::ng-deep .p-menubar .p-menuitem-text,
+  :host-context(.my-app-dark) ::ng-deep .p-menubar .p-menuitem-icon {
+    color: var(--text-color-dark, #fff) !important;
+  }
+  
+  /* Add a subtle hover effect for menu items */
+  ::ng-deep .p-menubar .p-menuitem-link:hover {
+    background: rgba(255, 255, 255, 0.3) !important;
+  }
+  
+  :host-context(.my-app-dark) ::ng-deep .p-menubar .p-menuitem-link:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+  }
