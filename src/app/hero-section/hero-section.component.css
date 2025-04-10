@@ -1,0 +1,68 @@
+
+  
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  :host {
+    display: block;
+    height: 200vh;
+    width: 100%;
+    /* align-items: center; */
+    justify-content: center;
+    padding: 0 2rem; /* optional horizontal padding */
+  }
+  
+.hero {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-title {
+  transform: translateX(20px);
+  opacity: 0;
+  z-index: 10;
+  margin-top: -30px;
+    font-size: 7vw;
+    font-weight: 700;
+    color: --primary-color;
+    text-align: center;
+    position: relative; /* Required for GSAP transforms */
+  transform-origin: center; 
+
+}
+
+.subtitle {
+  display: block;
+}
+
+.blob-container-1 {
+  position: absolute;
+  top: 70vh;
+  left: 50%;
+  width: 80%;
+  height: 100%;
+  /* overflow: hidden; */
+  z-index: 0; /* Ensure the blob is behind the text */
+}
+
+.blob-container-2 {
+  position: absolute;
+  top: -40vh;
+  left: -30%;
+  width: 70%;
+  height: 100%;
+  /* overflow: hidden; */
+  z-index: -1; /* Ensure the blob is behind the text */
+}
+
+.hero-subtitle {
+  opacity: 0;
+  transform: translateY(20px);
+}

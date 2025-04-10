@@ -1,0 +1,12 @@
+app-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* or whatever matches your theme */
+  }
+  
+  @media (max-width: 768px) {
+    app-hero-section {
+      margin-top: -40px;
+    }
+  }
+  
