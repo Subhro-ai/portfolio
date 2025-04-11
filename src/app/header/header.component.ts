@@ -19,14 +19,19 @@ export class HeaderComponent {
         {
             label: 'Home',
             icon: 'pi pi-home',
+            command: () => this.scrollToSection('hero')
         },
         {
           label : 'About',
-          icon : 'pi pi-user'
+          icon : 'pi pi-user',
+          command: () => this.scrollToSection('about')
+
         },
         {
           label: 'Skills',
-          icon : 'pi pi-lightbulb'
+          icon : 'pi pi-lightbulb',
+          command: () => this.scrollToSection('skills')
+
         },
         {
             label: 'Projects',
@@ -38,6 +43,13 @@ export class HeaderComponent {
         }
     ];
 }
+scrollToSection(sectionId: string) {
+  const el = document.getElementById(sectionId);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
 
   toggleDarkMode() {
     const element : any = document.querySelector('html');

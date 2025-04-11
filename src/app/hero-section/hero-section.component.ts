@@ -86,7 +86,7 @@ export class HeroSectionComponent implements AfterViewInit{
       duration: 1,
       opacity: 1,
       y: -100,
-      ease: 'power4.In',
+      ease: 'power2.In',
       stagger: 0.5,
     });
   }

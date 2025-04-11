@@ -21,7 +21,7 @@ const MyPreset = definePreset(Aura, {
     colorScheme: {
       light: {
         surface: {
-          bento: '#ffffff'
+          bento: '#e0e0e0'
         }
       },
       dark: {
