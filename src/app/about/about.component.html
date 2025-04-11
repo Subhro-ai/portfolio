@@ -1,1 +1,59 @@
-<p>about works!</p>
+<div class="about-section">
+    <div class="star-container" #star>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480">
+            <defs>
+                <linearGradient id="sw-gradient2" x1="0" x2="1" y1="1" y2="0">
+                    <stop stop-color="rgba(248, 117, 55, 1)" offset="0%"></stop>
+                    <stop stop-color="rgba(251, 168, 31, 1)" offset="100%"></stop>
+                </linearGradient>
+                <filter id="grainy-effect">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" result="noise" />
+                    <feBlend in="SourceGraphic" in2="noise" mode="multiply" />
+                </filter>
+            </defs>
+            <path d="m240 240 160-80v-.7A79.8 79.8 0 0 0 320.7 80h-.7l-80 160ZM240 240 160 80h-.7A79.8 79.8 0 0 0 80 159.3v.7l160 80ZM240 240l80 160h.7a79.8 79.8 0 0 0 79.3-79.3v-.7l-160-80ZM240 240 80 320v.7a79.8 79.8 0 0 0 79.3 79.3h.7l80-160ZM240 240l169.7 56.6.5-.5a79.8 79.8 0 0 0 0-112.2l-.5-.5L240 240ZM240 240l56.6-169.7-.5-.5a79.8 79.8 0 0 0-112.2 0l-.5.5L240 240ZM240 240l-56.6 169.7.5.5a79.8 79.8 0 0 0 112.2 0l.5-.5L240 240ZM240 240 70.3 183.4l-.5.5a79.8 79.8 0 0 0 0 112.2l.5.5L240 240Z" fill="url(#sw-gradient2)">
+            </path>
+        </svg>
+    </div>
+    
+  <div class="about-container">
+    <div class="title-wrapper">
+      <h1 class="about-title" #typewriter></h1>
+      <!-- <img
+        class="about-image"
+        src="WhatsApp_Image_2025-04-11_at_23.44.08-removebg-preview.webp"
+        alt="About Me"
+      /> -->
+    </div>
+
+    <div class="desc-container">
+        <ul class="about-list" #aboutList>
+            <li class="about-item">
+              <span class="pi pi-user" style="margin-right: 15px;"></span>
+              <span class="label">Name:</span> Subhrajyoti Singha
+            </li>
+            <li class="about-item">
+              <span class="pi pi-graduation-cap" style="margin-right: 15px;"></span>
+              <span class="label">Degree:</span> B.Tech in Computer Science and Engineering
+            </li>
+            <li class="about-item">
+              <span class="pi pi-building-columns" style="margin-right: 15px;"></span>
+              <span class="label">University:</span> SRM Institute of Science and Technology
+            </li>
+            <li class="about-item">
+              <span class="pi pi-map-marker" style="margin-right: 15px;"></span>
+              <span class="label">Location:</span> Chennai, India
+            </li>
+            <li class="about-item">
+              <span class="pi pi-calendar
+              " style="margin-right: 15px;"></span>
+              <span class="label">Year:</span> 2022–2026
+            </li>
+            <li class="about-item">
+              <span class="pi pi-bullseye" style="margin-right: 15px;"></span>
+              <span class="label">Hobbies:</span> Photography, building cool UIs, traveling
+            </li>
+          </ul>
+    </div>
+  </div>
+</div>

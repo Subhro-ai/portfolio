@@ -62,7 +62,7 @@
   left: 50%;
   width: 80%;
   height: 100%;
-  z-index: 0; /* Ensure the blob is behind the text */
+  z-index: 500; /* Ensure the blob is behind the text */
 }
 
 .blob-container-2 {
@@ -72,4 +72,14 @@
   width: 70%;
   height: 100%;
   z-index: -1; /* Ensure the blob is behind the text */
+}
+.blob-container-3 {
+  position: absolute;
+  top: 0vh;
+  left: 50%;
+  width: 20%;
+  height: 100%;
+  opacity: 50%;
+  z-index: -2; /* Ensure the blob is behind the text */
+  filter: blur(10px);
 }

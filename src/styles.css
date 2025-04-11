@@ -8,11 +8,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    transition: all 0.3s ease;
+    transition: color 0.3s ease;
+    /* transition: background 0.3s ease; */
   }
   html {
     scroll-behavior: smooth;
   }
+
+  
 body {
     font-family: var(--font-family); /* Apply the font globally */
 }

@@ -14,6 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
 export class HeroSectionComponent implements AfterViewInit{
   @ViewChild('blob1') blob1!: ElementRef;
   @ViewChild('blob2') blob2!: ElementRef;
+  @ViewChild('blob3') blob3!: ElementRef;
   @ViewChild('container', { static: true }) titleContainer!: ElementRef;
   @ViewChild('title', { static: true }) title!: ElementRef;
   @ViewChild('subtitle', { static: true }) subtitle!: ElementRef;
@@ -30,6 +31,8 @@ export class HeroSectionComponent implements AfterViewInit{
     this.titleAnimation();
     this.blobFlyawayOnScroll();
     this.titleFlyawayOnScroll();
+    this.blob1Animation();
+    this.blob2Animation();
     // Pin the title container
     ScrollTrigger.create({
       trigger: this.titleContainer.nativeElement,
@@ -40,8 +43,7 @@ export class HeroSectionComponent implements AfterViewInit{
     });
     
     // Animate the blob shapes
-    this.blob1Animation();
-    this.blob2Animation();
+    
   }
 
   blob1Animation() {
@@ -67,6 +69,17 @@ export class HeroSectionComponent implements AfterViewInit{
       }
     });
   }
+  blob3Animation() {
+    gsap.to(this.blob3.nativeElement, {
+      duration: 10,
+      repeat: -1,
+      yoyo: true,
+      ease: 'power1.inOut',
+      attr: {
+        d: 'M26.1,-23C31,-14.6,30.3,-3.9,27.2,4.7C24,13.4,18.4,20,10.2,25.7C2,31.3,-8.8,36,-17.9,33.2C-26.9,30.3,-34.2,19.9,-37.1,8.2C-39.9,-3.5,-38.4,-16.4,-31.5,-25.2C-24.5,-34,-12.3,-38.6,-0.8,-37.9C10.6,-37.3,21.2,-31.3,26.1,-23Z'
+      }
+    });
+  }
   
   titleAnimation() {
     gsap.to([this.title.nativeElement, this.subtitle.nativeElement], {
@@ -83,7 +96,7 @@ export class HeroSectionComponent implements AfterViewInit{
       scrollTrigger: {
         trigger: this.section.nativeElement,
         start: 'top top',
-        end: 'bottom top',
+        end: '50% top',
         scrub: 1,
         markers: true,
       }
@@ -113,14 +126,16 @@ export class HeroSectionComponent implements AfterViewInit{
     
     // Animate each blob container separately
     tl.to(this.blobContainer1.nativeElement, {
-      y: '-150vh',
-      x: '-20vw',
+      y: '-220vh',
       ease: 'power2.out',
     }, 0);
     
     tl.to(this.blobContainer2.nativeElement, {
       y: '-200vh',
-      x: '20vw',
+      ease: 'power2.out',
+    }, 0);
+    tl.to(this.blob3.nativeElement, {
+      y: '-50vh',
       ease: 'power2.out',
     }, 0);
   }
