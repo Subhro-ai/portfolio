@@ -76,9 +76,43 @@ img {
     width: 30%; 
     z-index: -1; 
     opacity: 0;
+
 }
 
 .about-section {
     height: 100vh;
     position: relative; 
+}
+
+.about-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.about-item {
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+}
+
+.about-item .pi {
+  font-size: 1.5rem; /* Bigger icon size */
+  padding: 10px;
+  border-radius: 50%;
+  /* background-color: #f0f0f0; */
+  box-shadow: 4px 4px 5px rgba(143, 143, 143, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.label {
+  font-weight: bold;
+  margin-right: 5px;
 }

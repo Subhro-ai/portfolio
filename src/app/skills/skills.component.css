@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Birthstone&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+.parent {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 20px;
+    height: 90%;
+    width: 100%;
+    padding: 20px;
+}
+    
+.div1 {
+    grid-column: span 2 / span 2;
+    grid-row: span 2 / span 2;
+}
+
+.div2 {
+    grid-column: span 2 / span 2;
+    grid-row: span 2 / span 2;
+    grid-column-start: 1;
+    grid-row-start: 3;
+}
+
+.div3 {
+    grid-column: span 4 / span 4;
+    grid-row: span 2 / span 2;
+    grid-column-start: 1;
+    grid-row-start: 5;
+}
+
+.div4 {
+    grid-column: span 4 / span 4;
+    grid-row: span 2 / span 2;
+    grid-column-start: 3;
+    grid-row-start: 3;
+    /* color: rgba(248, 117, 55, 1); */
+    font-weight: 800;
+    /* background-color: rgba(248, 117, 55, 1) !important; */
+    font-family: "Montserrat", sans-serif;
+}
+.div4 {
+    /* Define the gradient background */
+    background-image: linear-gradient(
+      to right,
+      rgba(248, 117, 55, 1),
+      rgba(251, 168, 31, 1)
+    );
+    
+    /* Make the text transparent */
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    
+    /* Clip the background to the text */
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+.div5 {
+    grid-column: span 2 / span 2;
+    grid-row: span 2 / span 2;
+    grid-column-start: 5;
+    grid-row-start: 5;
+}
+
+.div6 {
+    grid-column: span 2 / span 2;
+    grid-row: span 3 / span 3;
+    grid-column-start: 7;
+    grid-row-start: 4;
+}
+
+.div7 {
+    grid-column: span 2 / span 2;
+    grid-row: span 3 / span 3;
+    grid-column-start: 7;
+    grid-row-start: 1;
+}
+
+.div8 {
+    grid-column: span 2 / span 2;
+    grid-row: span 2 / span 2;
+    grid-column-start: 3;
+    grid-row-start: 1;
+}
+
+.div9 {
+    grid-column: span 2 / span 2;
+    grid-row: span 2 / span 2;
+    grid-column-start: 5;
+    grid-row-start: 1;
+}
+
+.container {
+
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+#child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid #ffffff; */
+    border-radius: 20px;
+    box-shadow: 4px 4px 5px rgba(21, 21, 21, 0.2);
+    background-color: var(--p-surface-bento) !important;
+    font-size: 10vw;
+}

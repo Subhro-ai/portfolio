@@ -98,7 +98,7 @@ export class HeroSectionComponent implements AfterViewInit{
         start: 'top top',
         end: '50% top',
         scrub: 1,
-        markers: true,
+        markers: false,
       }
     });
     

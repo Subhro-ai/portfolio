@@ -20,6 +20,9 @@ export class AboutComponent implements AfterViewInit {
 
 
   ngAfterViewInit(): void {
+    
+    
+
     const items = this.aboutList.nativeElement.querySelectorAll('.about-item');
     gsap.set(items, {
       opacity: 0,
