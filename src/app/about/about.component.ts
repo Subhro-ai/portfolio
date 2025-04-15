@@ -14,7 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
 })
 export class AboutComponent implements AfterViewInit {
   @ViewChild('aboutList') aboutList!: ElementRef;
-  @ViewChildren('aboutList', { read: ElementRef }) listItems!: QueryList<ElementRef>;
+  // @ViewChildren('aboutList', { read: ElementRef }) listItems!: QueryList<ElementRef>;
   @ViewChild('star') star!: ElementRef;
   @ViewChild('typewriter') typewriter!: ElementRef;
 
