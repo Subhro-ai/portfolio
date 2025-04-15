@@ -36,7 +36,6 @@
 }
 
 .hero-title {
-  transform: translateX(0); /* Removed horizontal shift */
   z-index: 10;
   margin-top: 0; /* Removed negative margin */
   font-size: 7vw;
@@ -44,7 +43,7 @@
   color: var(--primary-color);
   text-align: center;
   position: relative; /* Required for GSAP transforms */
-  transform-origin: center; 
+  visibility: hidden;
 }
 
 .hero-subtitle {

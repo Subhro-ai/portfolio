@@ -83,6 +83,7 @@ export class HeroSectionComponent implements AfterViewInit{
   
   titleAnimation() {
     gsap.to([this.title.nativeElement, this.subtitle.nativeElement], {
+      autoAlpha: 1,
       duration: 1,
       opacity: 1,
       y: -100,

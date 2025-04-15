@@ -37,7 +37,7 @@
     font-weight: 800 !important;
     background-color: var(--p-surface-bento) !important;
     /* Define the gradient background */
-    font-size: 10vw !important;
+    font-size: 8vw !important;
     box-shadow: none !important;
     background-image: linear-gradient(
       to right,
@@ -155,7 +155,7 @@
     background-color: var(--p-surface-bento) !important;
     color: var(--p-primary);
     transform: rotateY(180deg);
-    font-size: 30px;
+    font-size: 0.7em;
   }
   
 ul {
