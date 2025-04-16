@@ -1,11 +1,45 @@
-
-<main>
-  <section #section class="skills-content fluid">
-    <div #title class="title">
-      <h2>SKILLS</h2>
+<div class="container">
+  <div #head class="text-container">
+    <p >SKILLS</p>
+    <div class="title" #title>
+      <h2> Languages </h2>
     </div>
-    <ul #skillsList class="skills-list">
-      <li *ngFor="let skill of skills">{{ skill }}</li>
+  </div>
+  <p-divider layout="vertical" />
+
+  <div class="skills" >
+    <ul class="languages" #languages>
+      <li #items>JavaScript</li>
+      <li #items>TypeScript</li>
+      <li #items>Python</li>
+      <li #items>Java</li>
+      <li #items>C/C++</li>
+      <li #items>HTML/CSS</li>
     </ul>
-  </section>
-</main>
+    <p-divider />
+
+    <ul class="frameworks" #frameworks>
+      <li #items>Angular</li>
+      <li #items>React</li>
+      <li #items>Node.js</li>
+      <li #items>Django</li>
+      <li #items>Flask</li>
+      <li #items>Spring</li>
+    </ul> 
+    <p-divider />
+
+    <ul class="tools" #tools>
+      <li #items>Git</li>
+      <li #items>Docker</li>
+      <li #items>AWS</li>
+      <li #items>MongoDB</li>
+      <li #items>PostgreSQL</li>
+      <li #items>MySQL</li>
+      <li #items>Node.js</li>
+      <li #items>Express.js</li>
+      <li #items>Arduino IDE</li>
+      <li #items>Raspberry Pi</li>
+      <li #items>OpenCV</li>
+    </ul>
+  </div>
+</div>

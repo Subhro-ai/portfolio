@@ -17,6 +17,7 @@ const MyPreset = definePreset(Aura, {
       900: '{indigo.900}',
       950: '{indigo.950}'
     },
+    accentColor : '#F87537',
     // ColorScheme with light and dark modes
     colorScheme: {
       light: {
@@ -29,7 +30,8 @@ const MyPreset = definePreset(Aura, {
           bento: '#000000'
         }
       }
-    }
+    },
+    
   }
 });
 
