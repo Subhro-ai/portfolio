@@ -25,7 +25,7 @@ export class SkillsComponent implements AfterViewInit  {
       start: 'top 10%',
       end: 'bottom 100%',
       pin: true,
-      markers: true,
+      markers: false,
     });
     ScrollTrigger.create({
       trigger: this.head.nativeElement,
@@ -52,7 +52,7 @@ export class SkillsComponent implements AfterViewInit  {
       trigger: this.languages.nativeElement,
       start: 'top 10%',
       end: 'bottom 100%',
-      markers: true,
+      markers: false,
       onEnter: () => {
         gsap.to(this.skills.nativeElement.querySelector('h2'), {
           text: 'Languages',
@@ -64,7 +64,7 @@ export class SkillsComponent implements AfterViewInit  {
       trigger: this.frameworks.nativeElement,
       start: 'top 10%',
       end: 'bottom 100%',
-      markers: true,
+      markers: false,
       onEnter: () => {
         gsap.to(this.skills.nativeElement.querySelector('h2'), {
           text: 'Frameworks',
@@ -81,7 +81,6 @@ export class SkillsComponent implements AfterViewInit  {
       trigger: this.tools.nativeElement,
       start: 'top 10%',
       end: 'bottom 100%',
-      markers: true,
       onEnter: () => {
         gsap.to(this.skills.nativeElement.querySelector('h2'), {
           text: 'Tools',
