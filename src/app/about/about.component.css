@@ -30,7 +30,7 @@
     /* border: 1px solid #ffffff; */
 }
 .about-title {
-  font-size: 8vw;
+  font-size: 64px;
 }
 
 img {
@@ -54,7 +54,7 @@ img {
     align-items: flex-start;
     align-items: center;
     margin-bottom: 2rem;
-    font-size: 1.5vw;
+    /* font-size: 28px; */
   }
 
   .icon-placeholder {
@@ -96,7 +96,7 @@ img {
 .about-item {
   display: flex;
   align-items: center;
-  font-size: 1.1rem;
+  font-size:32px;
 }
 
 .about-item .pi {

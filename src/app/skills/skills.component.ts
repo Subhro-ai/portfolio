@@ -45,7 +45,7 @@ export class SkillsComponent implements AfterViewInit  {
         },
         x: 200,
         opacity: 0,
-        color: '#F87537',
+
       });
     });
     ScrollTrigger.create({
