@@ -36,10 +36,12 @@ export class HeaderComponent {
         {
             label: 'Projects',
             icon: 'pi pi-search',
+            command: () => this.scrollToSection('projects')
         },
         {
           label : 'Contact',
-          icon : 'pi pi-inbox'
+          icon : 'pi pi-inbox',
+          command: () => this.scrollToSection('contact')
         }
     ];
 }

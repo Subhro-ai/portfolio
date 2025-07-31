@@ -1,0 +1,141 @@
+.contact-section {
+  padding: 5rem 2rem;
+  background-color: var(--surface-ground);
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contact-title {
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--accentColor);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.contact-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+.contact-form {
+  background-color: var(--surface-card);
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.contact-form .p-fluid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Add spacing between form fields */
+}
+
+.contact-form .p-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form .p-field label {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-color-secondary);
+}
+
+/* Base styles for input fields */
+:host ::ng-deep .p-inputtext,
+:host ::ng-deep .p-inputtextarea {
+  color: var(--text-color) !important;
+  border-radius: 8px !important;
+  padding: 0.75rem 1rem !important;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Light mode input styles */
+:host-context(:not(.my-app-dark)) ::ng-deep .p-inputtext,
+:host-context(:not(.my-app-dark)) ::ng-deep .p-inputtextarea {
+    background-color: #ffffff !important;
+    border: 1px solid #ced4da !important;
+}
+
+/* Dark mode input styles - THE FIX */
+:host-context(.my-app-dark) ::ng-deep .p-inputtext,
+:host-context(.my-app-dark) ::ng-deep .p-inputtextarea {
+    background-color: #2a2a2a !important; /* A distinct dark gray */
+    border: 1px solid #555555 !important; /* A visible border */
+}
+
+
+/* Focus state for input fields */
+:host ::ng-deep .p-inputtext:focus,
+:host ::ng-deep .p-inputtextarea:focus {
+  border-color: var(--accentColor) !important;
+  box-shadow: 0 0 0 1px var(--accentColor) !important;
+}
+
+
+:host ::ng-deep .p-button {
+  background-color: var(--accentColor) !important;
+  border-color: var(--accentColor) !important;
+  transition: background-color 0.3s, transform 0.3s;
+  margin-top: 1rem; /* Add some space above the button */
+}
+
+:host ::ng-deep .p-button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.contact-info {
+    padding: 2rem;
+    background-color: var(--surface-card);
+    border-radius: 12px;
+}
+
+.contact-info h3 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  color: var(--accentColor);
+}
+
+.contact-info p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.contact-info .pi {
+  margin-right: 1rem;
+  font-size: 1.5rem;
+  color: var(--accentColor);
+}
+
+.social-icons {
+  margin-top: 2rem;
+}
+
+.social-icons a {
+  color: var(--text-color);
+  font-size: 2rem;
+  margin-right: 1.5rem;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.social-icons a:hover {
+  color: var(--accentColor);
+  transform: scale(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .contact-container {
+    grid-template-columns: 1fr;
+  }
+}

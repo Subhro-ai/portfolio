@@ -99,13 +99,7 @@
   margin-top: 1rem;
 }
 
-/* Default button style (GitHub) */
-:host ::ng-deep .p-button {
-  background-color: var(--accentColor) !important;
-  border-color: var(--accentColor) !important;
-  color: #ffffff !important; /* White text for better contrast */
-  transition: background-color 0.3s, transform 0.3s;
-}
+
 
 /* Secondary button style (Live Site) */
 :host ::ng-deep .p-button.p-button-secondary {
