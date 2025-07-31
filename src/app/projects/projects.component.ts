@@ -54,7 +54,7 @@ export class ProjectsComponent implements AfterViewInit, OnDestroy {
       scrollTrigger: {
         trigger: container,
         pin: true,
-        scrub: 2,
+        scrub: 1,
         end: () => `+=${track.scrollWidth}`,
         invalidateOnRefresh: true
       }
