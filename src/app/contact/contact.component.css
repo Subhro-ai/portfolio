@@ -1,3 +1,9 @@
+/* --- Z-INDEX FIX FOR TOAST --- */
+:host ::ng-deep .p-toast {
+  z-index: 10000 !important;
+}
+
+/* Main section container */
 .contact-section {
   padding: 5rem 2rem;
   background-color: var(--surface-ground);
@@ -6,16 +12,20 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow: hidden; /* Prevents animations from causing scrollbars */
 }
 
+/* Section title */
 .contact-title {
   font-size: 4rem;
   font-weight: 700;
   color: var(--accentColor);
   text-align: center;
   margin-bottom: 3rem;
+  color: #F87537
 }
 
+/* Grid container for form and info */
 .contact-container {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -25,16 +35,17 @@
   align-items: flex-start;
 }
 
+/* Form container card */
 .contact-form {
   background-color: var(--surface-card);
-  padding: 2rem;
+  padding: 2.5rem;
   border-radius: 12px;
 }
 
 .contact-form .p-fluid {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; /* Add spacing between form fields */
+  gap: 1.5rem;
 }
 
 .contact-form .p-field {
@@ -60,17 +71,16 @@
 /* Light mode input styles */
 :host-context(:not(.my-app-dark)) ::ng-deep .p-inputtext,
 :host-context(:not(.my-app-dark)) ::ng-deep .p-inputtextarea {
-    background-color: #ffffff !important;
+    background-color: #f7f7f7 !important;
     border: 1px solid #ced4da !important;
 }
 
-/* Dark mode input styles - THE FIX */
+/* Dark mode input styles */
 :host-context(.my-app-dark) ::ng-deep .p-inputtext,
 :host-context(.my-app-dark) ::ng-deep .p-inputtextarea {
-    background-color: #2a2a2a !important; /* A distinct dark gray */
-    border: 1px solid #555555 !important; /* A visible border */
+    background-color: #2a2a2a !important;
+    border: 1px solid #555555 !important;
 }
-
 
 /* Focus state for input fields */
 :host ::ng-deep .p-inputtext:focus,
@@ -79,19 +89,7 @@
   box-shadow: 0 0 0 1px var(--accentColor) !important;
 }
 
-
-:host ::ng-deep .p-button {
-  background-color: var(--accentColor) !important;
-  border-color: var(--accentColor) !important;
-  transition: background-color 0.3s, transform 0.3s;
-  margin-top: 1rem; /* Add some space above the button */
-}
-
-:host ::ng-deep .p-button:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.1);
-}
-
+/* Contact info card */
 .contact-info {
     padding: 2rem;
     background-color: var(--surface-card);
@@ -109,6 +107,7 @@
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
+  word-break: break-all;
 }
 
 .contact-info .pi {
