@@ -1,3 +1,34 @@
-<div class="container">
-    works
+<div class="projects-container" #projectsContainer>
+  <div class="projects-track" #projectsTrack>
+    <div class="project-card-container title-card-container">
+      <p-card>
+        <div class="title-card-content">
+          <h1>Projects</h1>
+        </div>
+      </p-card>
+    </div>
+    <div class="project-card-container" *ngFor="let project of projects">
+      <p-card [header]="project.title" subheader="Project">
+        <ng-template pTemplate="header">
+          <img alt="Project Image" [src]="project.imageUrl" />
+        </ng-template>
+        <p>{{ project.description }}</p>
+        <ng-template pTemplate="footer">
+          <div class="buttons">
+            <p-button
+              label="GitHub"
+              icon="pi pi-github"
+              (onClick)="navigateTo(project.githubUrl)"
+            ></p-button>
+            <p-button
+              label="Live Site"
+              icon="pi pi-external-link"
+              styleClass="p-button-secondary"
+              (onClick)="navigateTo(project.hostedUrl)"
+            ></p-button>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+  </div>
 </div>

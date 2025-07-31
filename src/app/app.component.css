@@ -1,10 +1,9 @@
-
 @media (max-width: 768px) {
     app-hero-section {
       margin-top: -40px;
     }
 }
-  
+
 .app-container {
     overflow: hidden;
     position: relative;
@@ -16,4 +15,8 @@
 }
 .skills-section {
     margin-top: 100px;
+}
+
+.projects-section {
+  margin-top: 100px;
 }
