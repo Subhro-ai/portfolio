@@ -63,7 +63,7 @@ export class ContactComponent implements AfterViewInit {
       return;
     }
 
-    const backendEndpoint = 'http://localhost:3000/send';
+    const backendEndpoint = 'https://portfolio-backend-42r1.onrender.com/send';
     this.http.post(backendEndpoint, this.formData).subscribe({
       next: (response) => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message sent successfully!' });
