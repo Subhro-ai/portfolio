@@ -5,7 +5,7 @@
 }
 
 .app-container {
-    overflow: hidden;
+    /* overflow: hidden; */ /* <-- REMOVE OR COMMENT OUT THIS LINE */
     position: relative;
 }
 .about-section {

@@ -24,21 +24,21 @@ export class ProjectsComponent implements AfterViewInit, OnDestroy {
     {
       title: 'SurveilAI – Surveillance System Powered by AI',
       description: 'Developed an IoT and ML-powered system using ESP32 to predict vegetable freshness in real time.',
-      imageUrl: '/surveil.png',
+      imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%DD',
       githubUrl: 'https://github.com/Varsha010101/SurveilAI',
       hostedUrl: 'https://surveilai.onrender.com/'
     },
     {
       title: 'ESP32-Based Smart Vegetable Freshness Detection System',
       description: 'Developed an IoT and ML-powered system using ESP32 to predict vegetable freshness in real time.',
-      imageUrl: '/iot.png',
+      imageUrl: 'https://images.unsplash.com/photo-1522204523234-8729aa6e3d5f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%DD',
       githubUrl: 'https://github.com/Subhro-ai/esp32-angular-vegetable-freshness-monitoring-system',
       hostedUrl: ''
     },
     {
       title: 'Aim Trainer Precision Shooting Practice Website',
       description: 'Developed an interactive aim training application to help users improve their mouse accuracy, reflexes, and reaction time through dynamic shooting exercises.',
-      imageUrl: '/aim.png',
+      imageUrl: 'https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%DD',
       githubUrl: 'https://github.com/Subhro-ai/aimTrainer-angular',
       hostedUrl: 'https://aim-trainer-rho.vercel.app/'
     },
@@ -48,24 +48,39 @@ export class ProjectsComponent implements AfterViewInit, OnDestroy {
     const container = this.projectsContainer.nativeElement;
     const track = this.projectsTrack.nativeElement;
 
-    this.scrollTween = gsap.to(track, {
-      x: () => -(track.scrollWidth - container.offsetWidth),
-      ease: 'none',
-      scrollTrigger: {
-        trigger: container,
-        pin: true,
-        scrub: 1,
-        end: () => `+=${track.scrollWidth}`,
-        invalidateOnRefresh: true
+    // Use GSAP's matchMedia for responsive animations
+    ScrollTrigger.matchMedia({
+      // Desktop-only animation
+      "(min-width: 769px)": () => {
+        this.scrollTween = gsap.to(track, {
+          x: () => -(track.scrollWidth - container.offsetWidth),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: container,
+            pin: true,
+            scrub: 2,
+            end: () => `+=${track.scrollWidth}`,
+            invalidateOnRefresh: true
+          }
+        });
+      },
+      // Mobile: No animation (natural scroll)
+      "(max-width: 768px)": () => {
+        // On mobile, we don't create the pinning scrollTween,
+        // allowing the CSS to handle the vertical layout.
       }
     });
   }
 
   navigateTo(url: string): void {
-    window.open(url, '_blank');
+    if (url) {
+      window.open(url, '_blank');
+    }
   }
 
   ngOnDestroy(): void {
-    this.scrollTween?.scrollTrigger?.kill();
+    // Kill the tween and its scrolltrigger
+    this.scrollTween?.kill();
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
   }
 }

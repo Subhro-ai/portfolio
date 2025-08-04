@@ -1,33 +1,27 @@
+/* --- Desktop Styles (Original) --- */
 .container {
   padding-top: 100px;
   height: auto;
   display: flex;
-  /* justify-content: center; */
-  /* align-items: center; */
   flex-direction: row;
-  /* text-align: center; */
 }
 
-li{
+li {
   list-style: none;
   margin: 0;
   padding: 0;
-  /* margin-bottom: 50px; */
   color: var(--color-primary);
-  
-
 }
-.title {
 
+.title {
   font-size: 56px;
   font-weight: 700;
   display: flex;
   flex-direction: column;
-  align-items : flex-start;
+  align-items: flex-start;
 }
 
 .skills {
-  
   font-size: 28px;
   width: 50%;
   display: flex;
@@ -35,16 +29,55 @@ li{
   line-height: 100px;
 }
 
-
 .text-container {
   width: 50%;
   margin-left: 2rem;
 }
 
-p {
+.text-container p {
   font-size: 28px;
   font-weight: 600;
   line-height: 2rem;
   opacity: 100%;
-  color: #F87537
+  color: #F87537;
+}
+
+/* --- Responsive Styles for Mobile --- */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column; /* Stack the containers vertically */
+    padding: 4rem 1rem 0 1rem;
+    align-items: center; /* Center the content */
+  }
+
+  .text-container {
+    width: 100%;
+    margin-left: 0;
+    text-align: center; /* Center the "SKILLS" and category titles */
+    margin-bottom: 2rem;
+    /* --- NEW STICKY STYLES --- */
+    position: sticky;
+    top: 60px; /* Adjust this value to sit below your fixed header */
+    background-color: var(--surface-ground); /* Match the page background */
+    z-index: 10; /* Ensure it stays above the scrolling list */
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .title {
+    align-items: center; /* Ensure the h2 is centered within its container */
+    font-size: 48px; /* Slightly reduce title size */
+  }
+
+  .skills {
+    width: 100%;
+    text-align: center;
+    font-size: 24px; /* Slightly reduce list item size */
+    line-height: 3.5rem; /* Adjust line height for mobile */
+  }
+
+  /* Hide ALL dividers on small screens */
+  :host ::ng-deep .p-divider {
+    display: none;
+  }
 }

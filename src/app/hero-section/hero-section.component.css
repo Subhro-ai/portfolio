@@ -9,17 +9,17 @@
   height: 100vh;
   width: 100%;
   justify-content: center;
-  padding: 0; /* Removed horizontal padding */
-  margin: 0; /* Added to ensure no margin */
+  padding: 0;
+  margin: 0;
   z-index: 1;
 }
 
 .hero-section {
-  height: 200vh; /* Makes the section scrollable */
+  height: 200vh;
   position: relative;
   overflow: hidden;
-  margin: 0; /* Ensure no margin */
-  padding: 0; /* Ensure no padding */
+  margin: 0;
+  padding: 0;
   width: 100%;
 }
 
@@ -27,32 +27,38 @@
   height: 100vh;
   width: 100%;
   display: flex;
-  margin-top: 0; /* Changed from -50px to remove negative margin */
+  margin-top: 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   position: relative;
+  padding: 0 1rem; /* Add some horizontal padding for smaller screens */
 }
 
 .hero-title {
   z-index: 10;
-  margin-top: 0; /* Removed negative margin */
-  font-size: 7vw;
+  margin-top: 0;
+  /* Use clamp() for fluid typography */
+  /* min-size, preferred-size, max-size */
+  font-size: clamp(2.5rem, 10vw, 7rem);
   font-weight: 700;
   color: var(--primary-color);
   text-align: center;
-  position: relative; /* Required for GSAP transforms */
+  position: relative;
   visibility: hidden;
+  line-height: 1.1; /* Improve line spacing on smaller screens */
 }
 
 .hero-subtitle {
-  position: relative; /* Changed from fixed to relative */
+  position: relative;
   display: block;
-  transform: translateY(20px); /* Added space between title and subtitle */
-  margin-top: 20px; /* Additional space between title and subtitle */
-  font-size: 2vw; /* Added responsive font size */
-  z-index: 10; /* Ensure it's above the blobs */
+  transform: translateY(20px);
+  margin-top: 20px;
+  /* Use clamp() for the subtitle as well */
+  font-size: clamp(1rem, 3vw, 1.75rem);
+  z-index: 10;
+  max-width: 90%; /* Prevent subtitle from being too wide */
 }
 
 .blob-container-1 {
@@ -61,7 +67,7 @@
   left: 50%;
   width: 80%;
   height: 100%;
-  z-index: 500; /* Ensure the blob is behind the text */
+  z-index: 500;
 }
 
 .blob-container-2 {
@@ -70,7 +76,7 @@
   left: -30%;
   width: 70%;
   height: 100%;
-  z-index: -1; /* Ensure the blob is behind the text */
+  z-index: -1;
 }
 .blob-container-3 {
   position: absolute;
@@ -79,6 +85,38 @@
   width: 20%;
   height: 100%;
   opacity: 50%;
-  z-index: -2; /* Ensure the blob is behind the text */
+  z-index: -2;
   filter: blur(10px);
+}
+
+/* Media query for tablet and smaller screens */
+@media (max-width: 768px) {
+  .blob-container-1 {
+    width: 120%; /* Make it larger */
+    top: 65vh;   /* Position it lower */
+    left: 10%;   /* Move it left */
+  }
+
+  .blob-container-2 {
+    width: 110%; /* Make it larger */
+    top: -45vh;  /* Position it higher */
+    left: -60%;  /* Move it further left */
+  }
+
+  .blob-container-3 {
+    width: 60%;
+    left: 50%;
+  }
+}
+
+
+/* Media query for very small screens to adjust layout slightly */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: clamp(2rem, 12vw, 7rem); /* Allow it to be a bit bigger on small phones */
+  }
+
+  .hero-subtitle {
+    font-size: clamp(0.9rem, 4vw, 1.75rem);
+  }
 }

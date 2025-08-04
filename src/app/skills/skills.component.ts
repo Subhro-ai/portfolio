@@ -1,15 +1,18 @@
+import { Component, AfterViewInit, ElementRef, ViewChild, ViewChildren, QueryList } from '@angular/core'; // Corrected import path
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild, ViewChildren, AfterViewInit, QueryList } from '@angular/core';
+import { DividerModule } from 'primeng/divider';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import { DividerModule } from 'primeng/divider';
-gsap.registerPlugin(ScrollTrigger);
+import { TextPlugin } from 'gsap/TextPlugin';
+
+gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
 @Component({
   selector: 'app-skills',
+  standalone: true, // Added standalone flag
   imports: [CommonModule, DividerModule],
   templateUrl: './skills.component.html',
-  styleUrl: './skills.component.css'
+  styleUrls: ['./skills.component.css']
 })
 export class SkillsComponent implements AfterViewInit  {
   text: string = 'Languages';
@@ -19,6 +22,7 @@ export class SkillsComponent implements AfterViewInit  {
   @ViewChild('tools') tools!: ElementRef;
   @ViewChild('frameworks') frameworks!: ElementRef;
   @ViewChild('head') head!: ElementRef;
+
   ngAfterViewInit(): void {
     ScrollTrigger.create({
       trigger: this.skills.nativeElement,
@@ -33,7 +37,7 @@ export class SkillsComponent implements AfterViewInit  {
       end: 'bottom 100%',
       pin: true,
     });
-    this.items.forEach((list, index) => {
+    this.items.forEach((list: ElementRef, index: number) => { // Added type for 'list'
       gsap.from(list.nativeElement, {
         scrollTrigger: {
           trigger: list.nativeElement,
@@ -57,7 +61,6 @@ export class SkillsComponent implements AfterViewInit  {
         gsap.to(this.skills.nativeElement.querySelector('h2'), {
           text: 'Languages',
         });
-        console.log('Frameworks');
       },
     });
     ScrollTrigger.create({
@@ -69,7 +72,6 @@ export class SkillsComponent implements AfterViewInit  {
         gsap.to(this.skills.nativeElement.querySelector('h2'), {
           text: 'Frameworks',
         });
-        console.log('Frameworks');
       },
       onLeaveBack: () => {
         gsap.to(this.skills.nativeElement.querySelector('h2'), {
@@ -93,7 +95,4 @@ export class SkillsComponent implements AfterViewInit  {
       }
     })
   }
-  
-
 }
-  

@@ -1,87 +1,41 @@
+.about-section {
+    height: 100vh;
+    position: relative;
+    padding: 2rem; /* Add padding for smaller screens */
+    display: flex; /* Use flexbox for centering */
+    align-items: center; /* Vertically center content */
+    justify-content: center; /* Horizontally center content */
+}
+
 .about-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 8px;
+    gap: 2rem; /* Increased gap for better spacing */
     height: 100%;
+    width: 100%;
+    max-width: 1200px; /* Set a max-width for large screens */
     align-items: center;
     justify-items: center;
 }
-
-.desc-container {
-    width: 50vw;
-    grid-row: span 2 / span 2;
-    grid-column-start: 2;
-    grid-row-start: 1;
-}
-
-
 
 .title-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    grid-row: span 2 / span 2;
-    grid-column-start: 1;
-    grid-row-start: 1;
     flex-direction: column;
     height: 100%;
     width: 100%;
-    /* border: 1px solid #ffffff; */
 }
+
 .about-title {
-  font-size: 64px;
+  /* Use clamp() for fluid typography */
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  text-align: center;
 }
 
-img {
-  width: 40%;
-}
-  
 .desc-container {
-    margin-bottom: 1.5rem;
+    width: 100%;
     text-align: left;
-}
-  
-  .about-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    
-  }
-  
-  .about-item {
-    display: flex;
-    align-items: flex-start;
-    align-items: center;
-    margin-bottom: 2rem;
-    /* font-size: 28px; */
-  }
-
-  .icon-placeholder {
-    width: 1.5rem;
-    display: inline-block;
-    margin-right: 0.5rem;
-  }
-  
-  .label {
-    font-weight: 600;
-    margin-right: 0.3rem;
-  }
-
-  .star-container {
-    position: absolute; 
-    left: 0%; 
-    top: 50%; 
-    transform: translateY(-50%) translateX(-50%); 
-    width: 30%; 
-    z-index: -1; 
-    opacity: 0;
-
-}
-
-.about-section {
-    height: 100vh;
-    position: relative; 
 }
 
 .about-list {
@@ -90,29 +44,70 @@ img {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1.5rem; /* Consistent gap between items */
 }
 
 .about-item {
   display: flex;
   align-items: center;
-  font-size:24px;
+  /* Use clamp() for fluid list item text */
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
 }
 
 .about-item .pi {
-  font-size: 1.5rem; /* Bigger icon size */
+  font-size: 1.5rem;
   padding: 10px;
   border-radius: 50%;
-  /* background-color: #f0f0f0; */
   box-shadow: 4px 4px 5px rgba(143, 143, 143, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   width: 40px;
   height: 40px;
+  margin-right: 1rem; /* Add space between icon and text */
 }
 
 .label {
   font-weight: bold;
-  margin-right: 5px;
+  margin-right: 0.5rem;
+}
+
+.star-container {
+    position: absolute;
+    left: 0%;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    width: 30%;
+    z-index: -1;
+    opacity: 0;
+}
+
+/* --- Responsive Styles --- */
+@media (max-width: 992px) {
+    .about-section {
+        height: auto; /* Allow height to adjust to content */
+        padding: 4rem 1rem;
+    }
+
+    .about-container {
+        grid-template-columns: 1fr; /* Stack to a single column */
+        gap: 3rem;
+    }
+
+    .title-wrapper {
+        text-align: center;
+    }
+
+    .desc-container {
+        text-align: left;
+        width: 100%;
+        max-width: 500px; /* Constrain width for readability */
+        margin: 0 auto; /* Center the list on mobile */
+    }
+
+    .star-container {
+        width: 50%; /* Make star larger but more subtle */
+        left: -10%;
+        opacity: 0; /* GSAP will fade it in */
+    }
 }
