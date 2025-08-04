@@ -2,7 +2,6 @@
 
 Welcome to the repository for my personal portfolio website. This project is a dynamic, single-page application designed to showcase my skills, projects, and professional background in a visually engaging and interactive way. It features a modern design, smooth animations, and a fully functional contact form.
 
-![Portfolio Screenshot](https://placehold.co/800x400/1a1a1a/F87537?text=Portfolio+Screenshot)
 
 ### [View Live Demo](https://www.linkedin.com/in/subhrajyoti-singha-b243082a3/) <!-- TODO: Add your live URL here -->
 
