@@ -4,6 +4,11 @@
     <p class="hero-subtitle" #subtitle>
       Merging logic with aesthetics, one project at a time.
     </p>
+    <div class="cta-buttons" #ctaButtons>
+      <a href="assets/resume.pdf" target="_blank" rel="noopener noreferrer" class="no-decoration">
+        <p-button label="View Resume" icon="pi pi-file" [rounded]="true" styleClass="p-button-outlined"></p-button>
+      </a>
+<p-button label="Contact Me" icon="pi pi-envelope" [rounded]="true" (click)="scrollToContact()"></p-button>    </div>
   </div>
 
   <!-- Each blob container has its own ViewChild reference -->

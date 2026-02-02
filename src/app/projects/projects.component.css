@@ -77,6 +77,8 @@
   flex-direction: column;
   height: 100%;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  /* padding-top: 80px; */
+  margin-top: 80px;
 }
 
 :host ::ng-deep .p-card:hover {
@@ -139,4 +141,17 @@
 :host ::ng-deep .p-button:hover {
   transform: translateY(-2px);
   filter: brightness(1.1);
+}
+
+
+:host {
+  display: block;
+  /* Adds margin to the top of the component to clear the fixed header */
+  padding-top: 80px; 
+}
+
+.projects-container {
+  /* ... existing styles ... */
+  /* If :host padding isn't enough, you can add margin here too */
+  margin-top: 2rem;
 }

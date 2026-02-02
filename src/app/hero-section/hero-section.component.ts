@@ -2,11 +2,12 @@ import {AfterViewInit, OnInit, Component, ViewChild, ElementRef } from '@angular
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import SplitText from 'gsap/TextPlugin';
+import { ButtonModule } from 'primeng/button';
 gsap.registerPlugin(ScrollTrigger);
 
 @Component({
   selector: 'app-hero-section',
-  imports: [],
+  imports: [ButtonModule],
   standalone: true,
   templateUrl: './hero-section.component.html',
   styleUrl: './hero-section.component.css'
@@ -15,6 +16,7 @@ export class HeroSectionComponent implements AfterViewInit{
   @ViewChild('blob1') blob1!: ElementRef;
   @ViewChild('blob2') blob2!: ElementRef;
   @ViewChild('blob3') blob3!: ElementRef;
+  @ViewChild('ctaButtons', { static: true }) ctaButtons!: ElementRef;
   @ViewChild('container', { static: true }) titleContainer!: ElementRef;
   @ViewChild('title', { static: true }) title!: ElementRef;
   @ViewChild('subtitle', { static: true }) subtitle!: ElementRef;
@@ -23,16 +25,18 @@ export class HeroSectionComponent implements AfterViewInit{
   @ViewChild('section') section!: ElementRef;
   ngAfterViewInit(): void {
     // Initial setup
-    gsap.set([this.title.nativeElement, this.subtitle.nativeElement], {
+    gsap.set([this.title.nativeElement, this.subtitle.nativeElement, this.ctaButtons.nativeElement], {
       opacity: 0,
       y: 30,
     });
+    
     
     this.titleAnimation();
     this.blobFlyawayOnScroll();
     this.titleFlyawayOnScroll();
     this.blob1Animation();
     this.blob2Animation();
+    this.blob3Animation();
     // Pin the title container
     ScrollTrigger.create({
       trigger: this.titleContainer.nativeElement,
@@ -82,7 +86,7 @@ export class HeroSectionComponent implements AfterViewInit{
   }
   
   titleAnimation() {
-    gsap.to([this.title.nativeElement, this.subtitle.nativeElement], {
+    gsap.to([this.title.nativeElement, this.subtitle.nativeElement, this.ctaButtons.nativeElement], {
       autoAlpha: 1,
       duration: 1,
       opacity: 1,
@@ -103,6 +107,7 @@ export class HeroSectionComponent implements AfterViewInit{
       }
     });
     
+    
     // Animate the title and subtitle separately
     tl.to(this.title.nativeElement, {
       y: '-100vh',
@@ -110,6 +115,10 @@ export class HeroSectionComponent implements AfterViewInit{
     }, 0);
     
     tl.to(this.subtitle.nativeElement, {
+      y: '-100vh',
+      ease: 'power2.out',
+    }, 0);
+    tl.to(this.ctaButtons.nativeElement, {
       y: '-100vh',
       ease: 'power2.out',
     }, 0);
@@ -139,5 +148,12 @@ export class HeroSectionComponent implements AfterViewInit{
       y: '-50vh',
       ease: 'power2.out',
     }, 0);
+  }
+
+  scrollToContact() {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 }

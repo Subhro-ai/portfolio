@@ -120,3 +120,32 @@
     font-size: clamp(0.9rem, 4vw, 1.75rem);
   }
 }
+
+.hero-subtitle {
+  /* ... existing styles ... */
+  margin-bottom: 2rem; /* Add some space below subtitle */
+}
+
+/* NEW: Styles for CTA buttons */
+.cta-buttons {
+  position: relative;
+  color: var(--primary-color);
+  z-index: 10;
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: center;
+  align-items: center;
+  /* animation: fadeIn 1s ease-out 0.5s backwards; */
+}
+
+/* Optional: Ensure links don't mess up button styles */
+.no-decoration {
+  text-decoration: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+

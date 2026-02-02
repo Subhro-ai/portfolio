@@ -49,3 +49,15 @@
   :host-context(.my-app-dark) ::ng-deep .p-menubar .p-menuitem-link:hover {
     background: rgba(255, 255, 255, 0.1) !important;
   }
+
+  .nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
