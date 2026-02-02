@@ -16,7 +16,6 @@ export class HeroSectionComponent implements AfterViewInit{
   @ViewChild('blob1') blob1!: ElementRef;
   @ViewChild('blob2') blob2!: ElementRef;
   @ViewChild('blob3') blob3!: ElementRef;
-  @ViewChild('ctaButtons', { static: true }) ctaButtons!: ElementRef;
   @ViewChild('container', { static: true }) titleContainer!: ElementRef;
   @ViewChild('title', { static: true }) title!: ElementRef;
   @ViewChild('subtitle', { static: true }) subtitle!: ElementRef;
@@ -24,8 +23,9 @@ export class HeroSectionComponent implements AfterViewInit{
   @ViewChild('blobContainer2', { static: true }) blobContainer2!: ElementRef;
   @ViewChild('section') section!: ElementRef;
   ngAfterViewInit(): void {
-    // Initial setup
-    gsap.set([this.title.nativeElement, this.subtitle.nativeElement, this.ctaButtons.nativeElement], {
+    const startElements = [this.title.nativeElement, this.subtitle.nativeElement];
+
+    gsap.set(startElements, {
       opacity: 0,
       y: 30,
     });
@@ -44,12 +44,9 @@ export class HeroSectionComponent implements AfterViewInit{
       end: '+=100%',
       pin: true,
       scrub: true,
-    });
-    
-    // Animate the blob shapes
-    
+    });   
   }
-
+  
   blob1Animation() {
     gsap.to(this.blob1.nativeElement, {
       duration: 10,
@@ -86,7 +83,7 @@ export class HeroSectionComponent implements AfterViewInit{
   }
   
   titleAnimation() {
-    gsap.to([this.title.nativeElement, this.subtitle.nativeElement, this.ctaButtons.nativeElement], {
+    gsap.to([this.title.nativeElement, this.subtitle.nativeElement], {
       autoAlpha: 1,
       duration: 1,
       opacity: 1,
@@ -118,10 +115,6 @@ export class HeroSectionComponent implements AfterViewInit{
       y: '-100vh',
       ease: 'power2.out',
     }, 0);
-    tl.to(this.ctaButtons.nativeElement, {
-      y: '-100vh',
-      ease: 'power2.out',
-    }, 0);
   }
   blobFlyawayOnScroll() {
     // Create a timeline for the blob animations
@@ -150,10 +143,5 @@ export class HeroSectionComponent implements AfterViewInit{
     }, 0);
   }
 
-  scrollToContact() {
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
+  
 }
