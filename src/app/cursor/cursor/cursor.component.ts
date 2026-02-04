@@ -1,107 +1,161 @@
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common'
-import gsap from 'gsap';
-
+import { Component, ElementRef, AfterViewInit, OnDestroy, Renderer2, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-cursor',
   imports: [CommonModule],
   templateUrl: './cursor.component.html',
   styleUrl: './cursor.component.css',
-  encapsulation: ViewEncapsulation.None
+  standalone: true
 })
-export class CursorComponent {
-  @ViewChild('cursor') cursor!: ElementRef;
-  @ViewChild('follower') follower!: ElementRef;
+export class CursorComponent implements AfterViewInit, OnDestroy {
+  @ViewChild('cursor', { static: false }) cursor!: ElementRef<HTMLDivElement>;
+  @ViewChild('follower', { static: false }) follower!: ElementRef<HTMLDivElement>;
 
-  constructor() {}
+  private cursorX = 0;
+  private cursorY = 0;
+  private followerX = 0;
+  private followerY = 0;
+  private animationFrameId: number | null = null;
 
-  ngOnInit(): void {
-      setTimeout(() => {
-      this.initCursor();
-      this.addHoverListeners();
-    }, 0);
+  constructor(private renderer: Renderer2) {}
+
+  ngAfterViewInit(): void {
+    // Small delay to ensure everything is mounted
+    setTimeout(() => {
+      this.setupCursor();
+    }, 100);
   }
 
-  initCursor() {
+  private setupCursor(): void {
+    if (!this.cursor || !this.follower) {
+      console.warn('Cursor elements not available');
+      return;
+    }
+
     const cursorEl = this.cursor.nativeElement;
     const followerEl = this.follower.nativeElement;
 
-    // Center the cursor elements
-    gsap.set(cursorEl, { xPercent: -50, yPercent: -50 });
-    gsap.set(followerEl, { xPercent: -50, yPercent: -50 });
+    // Mouse move handler
+    const handleMouseMove = (e: MouseEvent) => {
+      this.cursorX = e.clientX;
+      this.cursorY = e.clientY;
 
-    // Create quickTo functions for performance
-    const xToCursor = gsap.quickTo(cursorEl, "x", { duration: 0.1, ease: "power3" });
-    const yToCursor = gsap.quickTo(cursorEl, "y", { duration: 0.1, ease: "power3" });
+      // Show cursors immediately on first move
+      this.renderer.setStyle(cursorEl, 'opacity', '1');
+      this.renderer.setStyle(followerEl, 'opacity', '1');
+    };
+
+    // Mouse leave handler
+    const handleMouseLeave = () => {
+      this.renderer.setStyle(cursorEl, 'opacity', '0');
+      this.renderer.setStyle(followerEl, 'opacity', '0');
+    };
+
+    // Add event listeners
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseleave', handleMouseLeave);
+
+    // Add hover effects to interactive elements
+    this.addHoverEffects();
+
+    // Start animation loop
+    this.animate();
+
+    // Store cleanup function
+    this.cleanup = () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      if (this.animationFrameId) {
+        cancelAnimationFrame(this.animationFrameId);
+      }
+    };
+  }
+
+  private animate = (): void => {
+    if (!this.cursor || !this.follower) return;
+
+    const cursorEl = this.cursor.nativeElement;
+    const followerEl = this.follower.nativeElement;
+
+    // Smoothly follow the cursor
+    this.followerX += (this.cursorX - this.followerX) * 0.15;
+    this.followerY += (this.cursorY - this.followerY) * 0.15;
+
+    // Update cursor position (instant)
+    this.renderer.setStyle(cursorEl, 'left', `${this.cursorX}px`);
+    this.renderer.setStyle(cursorEl, 'top', `${this.cursorY}px`);
+
+    // Update follower position (smooth)
+    this.renderer.setStyle(followerEl, 'left', `${this.followerX}px`);
+    this.renderer.setStyle(followerEl, 'top', `${this.followerY}px`);
+
+    this.animationFrameId = requestAnimationFrame(this.animate);
+  };
+
+  private addHoverEffects(): void {
+    const selectors = 'a, button, input, textarea, .p-button, .p-card, [role="button"]';
     
-    const xToFollower = gsap.quickTo(followerEl, "x", { duration: 0.6, ease: "power3" });
-    const yToFollower = gsap.quickTo(followerEl, "y", { duration: 0.6, ease: "power3" });
-
-    // Move cursor on mousemove
-    window.addEventListener("mousemove", (e) => {
-      // Show cursor when moving
-      gsap.to([cursorEl, followerEl], { autoAlpha: 1, duration: 0.2, overwrite: 'auto' });
-      
-      xToCursor(e.clientX);
-      yToCursor(e.clientY);
-      xToFollower(e.clientX);
-      yToFollower(e.clientY);
+    // Use MutationObserver to handle dynamically added elements
+    const observer = new MutationObserver(() => {
+      this.attachHoverListeners(selectors);
     });
 
-    // Hide cursor when leaving window
-    document.addEventListener("mouseleave", () => {
-      gsap.to([cursorEl, followerEl], { autoAlpha: 0, duration: 0.5 });
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
     });
+
+    // Initial attachment
+    this.attachHoverListeners(selectors);
+
+    // Store observer for cleanup
+    this.mutationObserver = observer;
   }
 
-  addHoverListeners() {
-    // Select all interactive elements
-    const hoverables = document.querySelectorAll('a, button, .card, input, textarea, .hover-trigger');
+  private attachHoverListeners(selectors: string): void {
+    const elements = document.querySelectorAll(selectors);
     
-    hoverables.forEach((el) => {
-      el.addEventListener('mouseenter', () => this.onHoverEnter());
-      el.addEventListener('mouseleave', () => this.onHoverLeave());
+    elements.forEach((el) => {
+      if (!(el as any).__cursorListenersAttached) {
+        el.addEventListener('mouseenter', this.handleHoverEnter);
+        el.addEventListener('mouseleave', this.handleHoverLeave);
+        (el as any).__cursorListenersAttached = true;
+      }
     });
   }
 
-  onHoverEnter() {
-    gsap.to(this.follower.nativeElement, { 
-      scale: 3, 
-      opacity: 0.3,
-      backgroundColor: 'var(--primary-color)',
-      borderWidth: 0,
-      duration: 0.3 
-    });
-    gsap.to(this.cursor.nativeElement, { 
-      scale: 0.5, 
-      backgroundColor: 'transparent',
-      duration: 0.3 
-    });
-  }
+  private handleHoverEnter = (): void => {
+    if (!this.follower || !this.cursor) return;
 
-  onHoverLeave() {
-    gsap.to(this.follower.nativeElement, { 
-      scale: 1, 
-      opacity: 1,
-      backgroundColor: 'transparent',
-      borderWidth: '1px',
-      duration: 0.3 
-    });
-    gsap.to(this.cursor.nativeElement, { 
-      scale: 1, 
-      backgroundColor: 'var(--text-color)', // Resets to theme color
-      duration: 0.3 
-    });
-  }
+    const followerEl = this.follower.nativeElement;
+    const cursorEl = this.cursor.nativeElement;
+
+    this.renderer.setStyle(followerEl, 'transform', 'translate(-50%, -50%) scale(1.5)');
+    this.renderer.setStyle(followerEl, 'background-color', 'rgba(255, 255, 255, 0.2)');
+    this.renderer.setStyle(cursorEl, 'transform', 'translate(-50%, -50%) scale(0.5)');
+  };
+
+  private handleHoverLeave = (): void => {
+    if (!this.follower || !this.cursor) return;
+
+    const followerEl = this.follower.nativeElement;
+    const cursorEl = this.cursor.nativeElement;
+
+    this.renderer.setStyle(followerEl, 'transform', 'translate(-50%, -50%) scale(1)');
+    this.renderer.setStyle(followerEl, 'background-color', 'transparent');
+    this.renderer.setStyle(cursorEl, 'transform', 'translate(-50%, -50%) scale(1)');
+  };
+
+  private cleanup: (() => void) | null = null;
+  private mutationObserver: MutationObserver | null = null;
 
   ngOnDestroy(): void {
-    // Cleanup listeners if component is destroyed
-    window.removeEventListener("mousemove", () => {});
-    const hoverables = document.querySelectorAll('a, button');
-    hoverables.forEach((el) => {
-      el.removeEventListener('mouseenter', () => {});
-      el.removeEventListener('mouseleave', () => {});
-    });
+    if (this.cleanup) {
+      this.cleanup();
+    }
+    if (this.mutationObserver) {
+      this.mutationObserver.disconnect();
+    }
   }
 }

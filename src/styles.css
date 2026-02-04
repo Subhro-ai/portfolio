@@ -25,3 +25,19 @@ body {
 html, body {
     overflow-x: hidden;
   }
+
+body, a, button, input, textarea {
+  cursor: none !important;
+}
+
+body, html {
+  isolation: auto !important;
+}
+
+/* Remove isolation from common containers that might block blend modes */
+.app-container,
+app-root,
+main,
+section {
+  isolation: auto !important;
+}
