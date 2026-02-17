@@ -9,7 +9,8 @@
 
 .projects-track {
   display: flex;
-  padding: 0 5vw;
+  /* CHANGED: Added 80px top padding, 5vw left/right, 0 bottom */
+  padding: 80px 5vw 0 5vw; 
   gap: 4rem;
   height: fit-content;
 }
@@ -51,8 +52,7 @@
   }
 }
 
-
-/* --- Card and Button Styles (Unchanged) --- */
+/* --- Card and Button Styles --- */
 .title-card-container .p-card {
   display: flex;
   justify-content: center;
@@ -77,8 +77,7 @@
   flex-direction: column;
   height: 100%;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  /* padding-top: 80px; */
-  margin-top: 80px;
+  /* margin-top: 80px; <-- Removed to prevent bottom clipping of footer buttons */
 }
 
 :host ::ng-deep .p-card:hover {
@@ -143,15 +142,8 @@
   filter: brightness(1.1);
 }
 
-
 :host {
   display: block;
   /* Adds margin to the top of the component to clear the fixed header */
   padding-top: 80px; 
-}
-
-.projects-container {
-  /* ... existing styles ... */
-  /* If :host padding isn't enough, you can add margin here too */
-  margin-top: 2rem;
 }
