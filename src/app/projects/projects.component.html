@@ -16,12 +16,14 @@
         <ng-template pTemplate="footer">
           <div class="buttons">
             <p-button
+              *ngIf="project.githubUrl"
               label="GitHub"
               icon="pi pi-github"
               styleClass="p-button-secondary"
               (onClick)="navigateTo(project.githubUrl)"
             ></p-button>
             <p-button
+              *ngIf="project.hostedUrl"
               label="Live Site"
               icon="pi pi-external-link"
               styleClass="p-button-secondary"
