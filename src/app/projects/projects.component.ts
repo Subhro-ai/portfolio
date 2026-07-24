@@ -31,9 +31,9 @@ export class ProjectsComponent implements AfterViewInit, OnDestroy {
     {
   title: 'CalSync – Automated College Timetable Sync',
   description: 'Developed a system that securely connects to a university portal, fetches real-time class schedules, and generates a live iCalendar (.ics) link to automatically sync timetable updates with personal calendar applications without manual intervention.',
-  imageUrl: 'calsync.png',
+  imageUrl: 'calsync.webp',
   githubUrl: 'https://github.com/Subhro-ai/calSync-backend',
-  hostedUrl: 'https://calsync-yhi1.onrender.com/'
+  hostedUrl: 'https://trycalsync.duckdns.org/'
     },
 
     {
