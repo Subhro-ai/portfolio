@@ -7,31 +7,38 @@
         </div>
       </p-card>
     </div>
-    <div class="project-card-container" *ngFor="let project of projects">
-      <p-card [header]="project.title" subheader="Project">
-        <ng-template pTemplate="header">
-          <img alt="Project Image" [src]="project.imageUrl" />
-        </ng-template>
-        <p>{{ project.description }}</p>
-        <ng-template pTemplate="footer">
-          <div class="buttons">
-            <p-button
-              *ngIf="project.githubUrl"
-              label="GitHub"
-              icon="pi pi-github"
-              styleClass="p-button-secondary"
-              (onClick)="navigateTo(project.githubUrl)"
-            ></p-button>
-            <p-button
-              *ngIf="project.hostedUrl"
-              label="Live Site"
-              icon="pi pi-external-link"
-              styleClass="p-button-secondary"
-              (onClick)="navigateTo(project.hostedUrl)"
-            ></p-button>
-          </div>
-        </ng-template>
-      </p-card>
-    </div>
+
+    @for (project of projects; track project.title) {
+      <div class="project-card-container">
+        <p-card [header]="project.title" subheader="Project">
+          <ng-template pTemplate="header">
+            <img [src]="project.imageUrl" [alt]="project.title" loading="lazy" decoding="async" />
+          </ng-template>
+
+          <p>{{ project.description }}</p>
+
+          <ng-template pTemplate="footer">
+            <div class="buttons">
+              @if (project.githubUrl) {
+                <p-button
+                  label="GitHub"
+                  icon="pi pi-github"
+                  styleClass="p-button-secondary"
+                  (onClick)="navigateTo(project.githubUrl)"
+                ></p-button>
+              }
+              @if (project.hostedUrl) {
+                <p-button
+                  label="Live Site"
+                  icon="pi pi-external-link"
+                  styleClass="p-button-secondary"
+                  (onClick)="navigateTo(project.hostedUrl)"
+                ></p-button>
+              }
+            </div>
+          </ng-template>
+        </p-card>
+      </div>
+    }
   </div>
 </div>

@@ -1,16 +1,7 @@
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
 :host {
   position: relative;
   height: 100vh;
   width: 100%;
-  justify-content: center;
-  padding: 0;
-  margin: 0;
   z-index: 1;
 }
 
@@ -18,8 +9,6 @@
   height: 200vh;
   position: relative;
   overflow: hidden;
-  margin: 0;
-  padding: 0;
   width: 100%;
 }
 
@@ -27,27 +16,24 @@
   height: 100vh;
   width: 100%;
   display: flex;
-  margin-top: 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   position: relative;
-  padding: 0 1rem; /* Add some horizontal padding for smaller screens */
+  padding: 0 1rem;
 }
 
+/* clamp() keeps the type fluid between the min and max sizes. */
 .hero-title {
   z-index: 10;
-  margin-top: 0;
-  /* Use clamp() for fluid typography */
-  /* min-size, preferred-size, max-size */
   font-size: clamp(2.5rem, 10vw, 7rem);
   font-weight: 700;
   color: var(--primary-color);
   text-align: center;
   position: relative;
   visibility: hidden;
-  line-height: 1.1; /* Improve line spacing on smaller screens */
+  line-height: 1.1;
 }
 
 .hero-subtitle {
@@ -55,10 +41,10 @@
   display: block;
   transform: translateY(20px);
   margin-top: 20px;
-  /* Use clamp() for the subtitle as well */
+  margin-bottom: 2rem;
   font-size: clamp(1rem, 3vw, 1.75rem);
   z-index: 10;
-  max-width: 90%; /* Prevent subtitle from being too wide */
+  max-width: 90%;
 }
 
 .blob-container-1 {
@@ -78,29 +64,30 @@
   height: 100%;
   z-index: -1;
 }
+
 .blob-container-3 {
   position: absolute;
-  top: 0vh;
+  top: 0;
   left: 50%;
   width: 20%;
   height: 100%;
-  opacity: 50%;
+  opacity: 0.5;
   z-index: -2;
   filter: blur(10px);
 }
 
-/* Media query for tablet and smaller screens */
+/* Tablet and below: enlarge and reposition the blobs. */
 @media (max-width: 768px) {
   .blob-container-1 {
-    width: 120%; /* Make it larger */
-    top: 65vh;   /* Position it lower */
-    left: 10%;   /* Move it left */
+    width: 120%;
+    top: 65vh;
+    left: 10%;
   }
 
   .blob-container-2 {
-    width: 110%; /* Make it larger */
-    top: -45vh;  /* Position it higher */
-    left: -60%;  /* Move it further left */
+    width: 110%;
+    top: -45vh;
+    left: -60%;
   }
 
   .blob-container-3 {
@@ -109,43 +96,12 @@
   }
 }
 
-
-/* Media query for very small screens to adjust layout slightly */
 @media (max-width: 480px) {
   .hero-title {
-    font-size: clamp(2rem, 12vw, 7rem); /* Allow it to be a bit bigger on small phones */
+    font-size: clamp(2rem, 12vw, 7rem);
   }
 
   .hero-subtitle {
     font-size: clamp(0.9rem, 4vw, 1.75rem);
   }
 }
-
-.hero-subtitle {
-  /* ... existing styles ... */
-  margin-bottom: 2rem; /* Add some space below subtitle */
-}
-
-/* NEW: Styles for CTA buttons */
-.cta-buttons {
-  position: relative;
-  color: var(--primary-color);
-  z-index: 10;
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-  justify-content: center;
-  align-items: center;
-  /* animation: fadeIn 1s ease-out 0.5s backwards; */
-}
-
-/* Optional: Ensure links don't mess up button styles */
-.no-decoration {
-  text-decoration: none;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-

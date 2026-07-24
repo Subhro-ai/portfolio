@@ -1,5 +1,4 @@
-import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
@@ -16,25 +15,19 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const CONTACT_ENDPOINT = 'https://portfolio-backend-42r1.onrender.com/send';
+
 @Component({
   selector: 'app-contact',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    InputTextModule,
-    InputTextarea,
-    ButtonModule,
-    ToastModule // Add ToastModule here
-  ],
-  providers: [MessageService], // Provide MessageService to the component
+  imports: [FormsModule, InputTextModule, InputTextarea, ButtonModule, ToastModule],
+  providers: [MessageService],
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css']
 })
 export class ContactComponent implements AfterViewInit {
-  @ViewChild('contactSection') contactSection!: ElementRef;
-  @ViewChild('title') title!: ElementRef;
-  @ViewChild('contactContainer') contactContainer!: ElementRef;
+  @ViewChild('contactSection') contactSection!: ElementRef<HTMLElement>;
+  @ViewChild('title') title!: ElementRef<HTMLElement>;
+  @ViewChild('contactContainer') contactContainer!: ElementRef<HTMLElement>;
 
   formData = {
     name: '',
@@ -42,7 +35,6 @@ export class ContactComponent implements AfterViewInit {
     message: ''
   };
 
-  // Inject MessageService
   constructor(private http: HttpClient, private messageService: MessageService) {}
 
   ngAfterViewInit(): void {
@@ -63,9 +55,8 @@ export class ContactComponent implements AfterViewInit {
       return;
     }
 
-    const backendEndpoint = 'https://portfolio-backend-42r1.onrender.com/send';
-    this.http.post(backendEndpoint, this.formData).subscribe({
-      next: (response) => {
+    this.http.post(CONTACT_ENDPOINT, this.formData).subscribe({
+      next: () => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message sent successfully!' });
         form.resetForm();
       },

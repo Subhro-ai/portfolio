@@ -1,43 +1,35 @@
-/* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+/* Global styles. Web fonts are loaded via <link> in index.html so they are
+   fetched in parallel with the stylesheet instead of blocking it. */
 @import "primeicons/primeicons.css";
-@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Birthstone&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
-    --font-family: 'Montserrat', sans-serif;
+  --font-family: 'Montserrat', sans-serif;
 }
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    /* transition: all 0.1s ease; */
-    /* transition: back 0.1s ease; */
-    /* transition: background 0.3s ease; */
-  }
-  html {
-    scroll-behavior: smooth;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  
+html {
+  scroll-behavior: smooth;
+}
+
+html,
 body {
-    font-family: var(--font-family); /* Apply the font globally */
+  overflow-x: hidden;
 }
-html, body {
-    overflow-x: hidden;
-  }
 
-body, a, button, input, textarea {
+body {
+  font-family: var(--font-family);
+}
+
+/* The custom cursor component stands in for the native pointer. */
+body,
+a,
+button,
+input,
+textarea {
   cursor: none !important;
-}
-
-body, html {
-  isolation: auto !important;
-}
-
-/* Remove isolation from common containers that might block blend modes */
-.app-container,
-app-root,
-main,
-section {
-  isolation: auto !important;
 }

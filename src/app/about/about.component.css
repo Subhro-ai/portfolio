@@ -1,56 +1,52 @@
 .about-section {
-    height: 100vh;
-    position: relative;
-    padding: 2rem; /* Add padding for smaller screens */
-    display: flex; /* Use flexbox for centering */
-    align-items: center; /* Vertically center content */
-    justify-content: center; /* Horizontally center content */
+  height: 100vh;
+  position: relative;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .about-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem; /* Increased gap for better spacing */
-    height: 100%;
-    width: 100%;
-    max-width: 1200px; /* Set a max-width for large screens */
-    align-items: center;
-    justify-items: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  height: 100%;
+  width: 100%;
+  max-width: 1200px;
+  align-items: center;
+  justify-items: center;
 }
 
 .title-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
 }
 
 .about-title {
-  /* Use clamp() for fluid typography */
   font-size: clamp(2.5rem, 6vw, 4rem);
   text-align: center;
 }
 
 .desc-container {
-    width: 100%;
-    text-align: left;
+  width: 100%;
+  text-align: left;
 }
 
 .about-list {
   list-style: none;
-  padding: 0;
-  margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; /* Consistent gap between items */
+  gap: 1.5rem;
 }
 
 .about-item {
   display: flex;
   align-items: center;
-  /* Use clamp() for fluid list item text */
   font-size: clamp(1rem, 2.5vw, 1.25rem);
 }
 
@@ -64,7 +60,7 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  margin-right: 1rem; /* Add space between icon and text */
+  margin-right: 1rem;
 }
 
 .label {
@@ -72,42 +68,39 @@
   margin-right: 0.5rem;
 }
 
+/* GSAP fades and spins this in on scroll. */
 .star-container {
-    position: absolute;
-    left: 0%;
-    top: 50%;
-    transform: translateY(-50%) translateX(-50%);
-    width: 30%;
-    z-index: -1;
-    opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  width: 30%;
+  z-index: -1;
+  opacity: 0;
 }
 
-/* --- Responsive Styles --- */
 @media (max-width: 992px) {
-    .about-section {
-        height: auto; /* Allow height to adjust to content */
-        padding: 4rem 1rem;
-    }
+  .about-section {
+    height: auto;
+    padding: 4rem 1rem;
+  }
 
-    .about-container {
-        grid-template-columns: 1fr; /* Stack to a single column */
-        gap: 3rem;
-    }
+  .about-container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
 
-    .title-wrapper {
-        text-align: center;
-    }
+  .title-wrapper {
+    text-align: center;
+  }
 
-    .desc-container {
-        text-align: left;
-        width: 100%;
-        max-width: 500px; /* Constrain width for readability */
-        margin: 0 auto; /* Center the list on mobile */
-    }
+  .desc-container {
+    max-width: 500px;
+    margin: 0 auto;
+  }
 
-    .star-container {
-        width: 50%; /* Make star larger but more subtle */
-        left: -10%;
-        opacity: 0; /* GSAP will fade it in */
-    }
+  .star-container {
+    width: 50%;
+    left: -10%;
+  }
 }

@@ -1,71 +1,61 @@
-import { Component, QueryList, viewChild, ViewChild, ViewChildren } from '@angular/core';
-import { ElementRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import { AfterViewInit } from '@angular/core';
 import { TextPlugin } from 'gsap/TextPlugin';
-gsap.registerPlugin(TextPlugin);
-gsap.registerPlugin(ScrollTrigger);
+
+gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
 @Component({
   selector: 'app-about',
-  imports: [],
   templateUrl: './about.component.html',
   styleUrl: './about.component.css'
 })
 export class AboutComponent implements AfterViewInit {
-  @ViewChild('aboutList') aboutList!: ElementRef;
-  // @ViewChildren('aboutList', { read: ElementRef }) listItems!: QueryList<ElementRef>;
-  @ViewChild('star') star!: ElementRef;
-  @ViewChild('typewriter') typewriter!: ElementRef;
-
+  @ViewChild('aboutList') aboutList!: ElementRef<HTMLElement>;
+  @ViewChild('star') star!: ElementRef<HTMLElement>;
+  @ViewChild('typewriter') typewriter!: ElementRef<HTMLElement>;
 
   ngAfterViewInit(): void {
-    
-    
+    const list = this.aboutList.nativeElement;
+    const items = list.querySelectorAll('.about-item');
 
-    const items = this.aboutList.nativeElement.querySelectorAll('.about-item');
-    gsap.set(items, {
-      opacity: 0,
-      x: 300,
-    });
+    gsap.set(items, { opacity: 0, x: 300 });
 
     gsap.to(this.star.nativeElement, {
       scrollTrigger: {
-        trigger: this.aboutList.nativeElement,
+        trigger: list,
         start: 'top 100%',
         end: 'top 30%',
-        scrub: 1,
-        markers: false,
+        scrub: 1
       },
       rotation: 360,
       opacity: 1,
-      scale: 2,
+      scale: 2
     });
 
     gsap.to(items, {
       scrollTrigger: {
-        trigger: this.aboutList.nativeElement,
+        trigger: list,
         start: 'top 80%',
         end: 'top 30%',
-        scrub: 0,
-        markers: false,
+        scrub: 0
       },
-        opacity: 1,
+      opacity: 1,
       x: 0,
       duration: 1,
       ease: 'power4.out',
-      stagger: 0.2,
-        
+      stagger: 0.2
     });
+
     gsap.to(this.typewriter.nativeElement, {
       scrollTrigger: {
-        trigger : this.aboutList.nativeElement,
+        trigger: list,
         start: 'top 80%',
         end: 'top 30%',
-        scrub: 0,
+        scrub: 0
       },
-      text: "ABOUT ME",
-      ease: "none"
+      text: 'ABOUT ME',
+      ease: 'none'
     });
   }
 }

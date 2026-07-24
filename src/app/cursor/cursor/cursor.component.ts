@@ -1,161 +1,150 @@
-import { Component, ElementRef, AfterViewInit, OnDestroy, Renderer2, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  NgZone,
+  OnDestroy,
+  Renderer2,
+  ViewChild
+} from '@angular/core';
+
+/** Elements that make the cursor react when hovered. */
+const INTERACTIVE_SELECTOR = 'a, button, input, textarea, .p-button, .p-card, [role="button"]';
+
+/** Fraction of the remaining distance the follower covers each frame. */
+const FOLLOW_EASE = 0.15;
+
+/** Sub-pixel distance below which the follower counts as settled. */
+const SETTLE_THRESHOLD = 0.01;
 
 @Component({
   selector: 'app-cursor',
-  imports: [CommonModule],
   templateUrl: './cursor.component.html',
-  styleUrl: './cursor.component.css',
-  standalone: true
+  styleUrl: './cursor.component.css'
 })
 export class CursorComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('cursor', { static: false }) cursor!: ElementRef<HTMLDivElement>;
-  @ViewChild('follower', { static: false }) follower!: ElementRef<HTMLDivElement>;
+  @ViewChild('cursor') cursor!: ElementRef<HTMLDivElement>;
+  @ViewChild('follower') follower!: ElementRef<HTMLDivElement>;
 
   private cursorX = 0;
   private cursorY = 0;
   private followerX = 0;
   private followerY = 0;
-  private animationFrameId: number | null = null;
+  private renderedX: number | null = null;
+  private renderedY: number | null = null;
 
-  constructor(private renderer: Renderer2) {}
+  private frameId: number | null = null;
+  private hovered: Element | null = null;
+
+  constructor(private renderer: Renderer2, private zone: NgZone) {}
 
   ngAfterViewInit(): void {
-    // Small delay to ensure everything is mounted
-    setTimeout(() => {
-      this.setupCursor();
-    }, 100);
+    // None of this touches the template, so keep it out of Angular's zone:
+    // otherwise every mouse move and animation frame would trigger a change
+    // detection pass across the whole app.
+    this.zone.runOutsideAngular(() => {
+      document.addEventListener('mousemove', this.onMouseMove, { passive: true });
+      document.addEventListener('mouseleave', this.onMouseLeave);
+      document.addEventListener('mouseover', this.onMouseOver, { passive: true });
+    });
   }
 
-  private setupCursor(): void {
-    if (!this.cursor || !this.follower) {
-      console.warn('Cursor elements not available');
+  ngOnDestroy(): void {
+    document.removeEventListener('mousemove', this.onMouseMove);
+    document.removeEventListener('mouseleave', this.onMouseLeave);
+    document.removeEventListener('mouseover', this.onMouseOver);
+
+    if (this.frameId !== null) {
+      cancelAnimationFrame(this.frameId);
+      this.frameId = null;
+    }
+  }
+
+  private readonly onMouseMove = (event: MouseEvent): void => {
+    this.cursorX = event.clientX;
+    this.cursorY = event.clientY;
+
+    this.setOpacity('1');
+    this.requestFrame();
+  };
+
+  private readonly onMouseLeave = (): void => {
+    this.setOpacity('0');
+  };
+
+  /**
+   * One delegated listener replaces per-element mouseenter/mouseleave pairs.
+   * `mouseover` bubbles, so the nearest interactive ancestor of the event
+   * target tells us whether the cursor should be in its hover state.
+   */
+  private readonly onMouseOver = (event: MouseEvent): void => {
+    const target = event.target instanceof Element ? event.target.closest(INTERACTIVE_SELECTOR) : null;
+
+    if (target === this.hovered) {
       return;
     }
 
-    const cursorEl = this.cursor.nativeElement;
-    const followerEl = this.follower.nativeElement;
-
-    // Mouse move handler
-    const handleMouseMove = (e: MouseEvent) => {
-      this.cursorX = e.clientX;
-      this.cursorY = e.clientY;
-
-      // Show cursors immediately on first move
-      this.renderer.setStyle(cursorEl, 'opacity', '1');
-      this.renderer.setStyle(followerEl, 'opacity', '1');
-    };
-
-    // Mouse leave handler
-    const handleMouseLeave = () => {
-      this.renderer.setStyle(cursorEl, 'opacity', '0');
-      this.renderer.setStyle(followerEl, 'opacity', '0');
-    };
-
-    // Add event listeners
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseleave', handleMouseLeave);
-
-    // Add hover effects to interactive elements
-    this.addHoverEffects();
-
-    // Start animation loop
-    this.animate();
-
-    // Store cleanup function
-    this.cleanup = () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseleave', handleMouseLeave);
-      if (this.animationFrameId) {
-        cancelAnimationFrame(this.animationFrameId);
-      }
-    };
-  }
-
-  private animate = (): void => {
-    if (!this.cursor || !this.follower) return;
-
-    const cursorEl = this.cursor.nativeElement;
-    const followerEl = this.follower.nativeElement;
-
-    // Smoothly follow the cursor
-    this.followerX += (this.cursorX - this.followerX) * 0.15;
-    this.followerY += (this.cursorY - this.followerY) * 0.15;
-
-    // Update cursor position (instant)
-    this.renderer.setStyle(cursorEl, 'left', `${this.cursorX}px`);
-    this.renderer.setStyle(cursorEl, 'top', `${this.cursorY}px`);
-
-    // Update follower position (smooth)
-    this.renderer.setStyle(followerEl, 'left', `${this.followerX}px`);
-    this.renderer.setStyle(followerEl, 'top', `${this.followerY}px`);
-
-    this.animationFrameId = requestAnimationFrame(this.animate);
+    this.hovered = target;
+    this.applyHoverState(target !== null);
   };
 
-  private addHoverEffects(): void {
-    const selectors = 'a, button, input, textarea, .p-button, .p-card, [role="button"]';
-    
-    // Use MutationObserver to handle dynamically added elements
-    const observer = new MutationObserver(() => {
-      this.attachHoverListeners(selectors);
-    });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
-    });
-
-    // Initial attachment
-    this.attachHoverListeners(selectors);
-
-    // Store observer for cleanup
-    this.mutationObserver = observer;
-  }
-
-  private attachHoverListeners(selectors: string): void {
-    const elements = document.querySelectorAll(selectors);
-    
-    elements.forEach((el) => {
-      if (!(el as any).__cursorListenersAttached) {
-        el.addEventListener('mouseenter', this.handleHoverEnter);
-        el.addEventListener('mouseleave', this.handleHoverLeave);
-        (el as any).__cursorListenersAttached = true;
-      }
-    });
-  }
-
-  private handleHoverEnter = (): void => {
-    if (!this.follower || !this.cursor) return;
-
-    const followerEl = this.follower.nativeElement;
-    const cursorEl = this.cursor.nativeElement;
-
-    this.renderer.setStyle(followerEl, 'transform', 'translate(-50%, -50%) scale(1.5)');
-    this.renderer.setStyle(followerEl, 'background-color', 'rgba(255, 255, 255, 0.2)');
-    this.renderer.setStyle(cursorEl, 'transform', 'translate(-50%, -50%) scale(0.5)');
-  };
-
-  private handleHoverLeave = (): void => {
-    if (!this.follower || !this.cursor) return;
-
-    const followerEl = this.follower.nativeElement;
-    const cursorEl = this.cursor.nativeElement;
-
-    this.renderer.setStyle(followerEl, 'transform', 'translate(-50%, -50%) scale(1)');
-    this.renderer.setStyle(followerEl, 'background-color', 'transparent');
-    this.renderer.setStyle(cursorEl, 'transform', 'translate(-50%, -50%) scale(1)');
-  };
-
-  private cleanup: (() => void) | null = null;
-  private mutationObserver: MutationObserver | null = null;
-
-  ngOnDestroy(): void {
-    if (this.cleanup) {
-      this.cleanup();
+  /** Schedules a frame only when one is not already pending. */
+  private requestFrame(): void {
+    if (this.frameId === null) {
+      this.frameId = requestAnimationFrame(this.tick);
     }
-    if (this.mutationObserver) {
-      this.mutationObserver.disconnect();
+  }
+
+  /**
+   * Moves the dot to the pointer and eases the follower towards it. The loop
+   * stops once both have settled and restarts on the next mouse move, so an
+   * idle pointer costs nothing.
+   */
+  private readonly tick = (): void => {
+    this.frameId = null;
+
+    const dx = this.cursorX - this.followerX;
+    const dy = this.cursorY - this.followerY;
+    const settled = Math.abs(dx) < SETTLE_THRESHOLD && Math.abs(dy) < SETTLE_THRESHOLD;
+
+    if (this.renderedX !== this.cursorX || this.renderedY !== this.cursorY) {
+      this.renderedX = this.cursorX;
+      this.renderedY = this.cursorY;
+      this.setPosition(this.cursor.nativeElement, this.cursorX, this.cursorY);
     }
+
+    if (!settled) {
+      this.followerX += dx * FOLLOW_EASE;
+      this.followerY += dy * FOLLOW_EASE;
+      this.setPosition(this.follower.nativeElement, this.followerX, this.followerY);
+      this.requestFrame();
+    }
+  };
+
+  private setPosition(element: HTMLElement, x: number, y: number): void {
+    this.renderer.setStyle(element, 'left', `${x}px`);
+    this.renderer.setStyle(element, 'top', `${y}px`);
+  }
+
+  private setOpacity(value: string): void {
+    this.renderer.setStyle(this.cursor.nativeElement, 'opacity', value);
+    this.renderer.setStyle(this.follower.nativeElement, 'opacity', value);
+  }
+
+  private applyHoverState(active: boolean): void {
+    const follower = this.follower.nativeElement;
+    const cursor = this.cursor.nativeElement;
+
+    this.renderer.setStyle(
+      follower,
+      'transform',
+      active ? 'translate(-50%, -50%) scale(1.5)' : 'translate(-50%, -50%) scale(1)'
+    );
+    this.renderer.setStyle(follower, 'background-color', active ? 'rgba(255, 255, 255, 0.2)' : 'transparent');
+    this.renderer.setStyle(
+      cursor,
+      'transform',
+      active ? 'translate(-50%, -50%) scale(0.5)' : 'translate(-50%, -50%) scale(1)'
+    );
   }
 }

@@ -1,5 +1,4 @@
-import { Component, AfterViewInit, ElementRef, ViewChild, ViewChildren, QueryList } from '@angular/core'; // Corrected import path
-import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { DividerModule } from 'primeng/divider';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
@@ -9,90 +8,70 @@ gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
 @Component({
   selector: 'app-skills',
-  standalone: true, // Added standalone flag
-  imports: [CommonModule, DividerModule],
+  imports: [DividerModule],
   templateUrl: './skills.component.html',
   styleUrls: ['./skills.component.css']
 })
-export class SkillsComponent implements AfterViewInit  {
-  text: string = 'Languages';
-  @ViewChildren('items') items!: QueryList<ElementRef>;
-  @ViewChild('title') skills!: ElementRef;
-  @ViewChild('languages') languages!: ElementRef;
-  @ViewChild('tools') tools!: ElementRef;
-  @ViewChild('frameworks') frameworks!: ElementRef;
-  @ViewChild('head') head!: ElementRef;
+export class SkillsComponent implements AfterViewInit {
+  @ViewChildren('items') items!: QueryList<ElementRef<HTMLElement>>;
+  @ViewChild('title') titleBox!: ElementRef<HTMLElement>;
+  @ViewChild('languages') languages!: ElementRef<HTMLElement>;
+  @ViewChild('frameworks') frameworks!: ElementRef<HTMLElement>;
+  @ViewChild('tools') tools!: ElementRef<HTMLElement>;
+  @ViewChild('head') head!: ElementRef<HTMLElement>;
+
+  private heading!: Element | null;
 
   ngAfterViewInit(): void {
-    ScrollTrigger.create({
-      trigger: this.skills.nativeElement,
-      start: 'top 10%',
-      end: 'bottom 100%',
-      pin: true,
-      markers: false,
-    });
-    ScrollTrigger.create({
-      trigger: this.head.nativeElement,
-      start: 'top 10%',
-      end: 'bottom 100%',
-      pin: true,
-    });
-    this.items.forEach((list: ElementRef, index: number) => { // Added type for 'list'
-      gsap.from(list.nativeElement, {
+    this.heading = this.titleBox.nativeElement.querySelector('h2');
+
+    // Keep the heading in view while the skill lists scroll past it.
+    for (const pinned of [this.titleBox, this.head]) {
+      ScrollTrigger.create({
+        trigger: pinned.nativeElement,
+        start: 'top 10%',
+        end: 'bottom 100%',
+        pin: true
+      });
+    }
+
+    // Slide each list item in from the right as it enters the viewport.
+    this.items.forEach(({ nativeElement }) => {
+      gsap.from(nativeElement, {
         scrollTrigger: {
-          trigger: list.nativeElement,
+          trigger: nativeElement,
           start: 'top 80%',
           end: 'bottom 40%',
           scrub: 1,
-          markers: false,
-          toggleActions: 'play none none reverse',
+          toggleActions: 'play none none reverse'
         },
         x: 200,
-        opacity: 0,
-
+        opacity: 0
       });
     });
-    ScrollTrigger.create({
-      trigger: this.languages.nativeElement,
-      start: 'top 10%',
-      end: 'bottom 100%',
-      markers: false,
-      onEnter: () => {
-        gsap.to(this.skills.nativeElement.querySelector('h2'), {
-          text: 'Languages',
-        });
-      },
+
+    // Retype the heading as each category comes into view, and restore the
+    // previous category when scrolling back up.
+    const categories = [
+      { list: this.languages, label: 'Languages' },
+      { list: this.frameworks, label: 'Frameworks' },
+      { list: this.tools, label: 'Tools' }
+    ];
+
+    categories.forEach(({ list, label }, index) => {
+      const previousLabel = categories[index - 1]?.label;
+
+      ScrollTrigger.create({
+        trigger: list.nativeElement,
+        start: 'top 10%',
+        end: 'bottom 100%',
+        onEnter: () => this.setHeading(label),
+        onLeaveBack: previousLabel ? () => this.setHeading(previousLabel) : undefined
+      });
     });
-    ScrollTrigger.create({
-      trigger: this.frameworks.nativeElement,
-      start: 'top 10%',
-      end: 'bottom 100%',
-      markers: false,
-      onEnter: () => {
-        gsap.to(this.skills.nativeElement.querySelector('h2'), {
-          text: 'Frameworks',
-        });
-      },
-      onLeaveBack: () => {
-        gsap.to(this.skills.nativeElement.querySelector('h2'), {
-          text: 'Languages',
-        });
-      }
-    });
-    ScrollTrigger.create({
-      trigger: this.tools.nativeElement,
-      start: 'top 10%',
-      end: 'bottom 100%',
-      onEnter: () => {
-        gsap.to(this.skills.nativeElement.querySelector('h2'), {
-          text: 'Tools',
-        });
-      },
-      onLeaveBack: () => {
-        gsap.to(this.skills.nativeElement.querySelector('h2'), {
-          text: 'Frameworks',
-        });
-      }
-    })
+  }
+
+  private setHeading(text: string): void {
+    gsap.to(this.heading, { text });
   }
 }

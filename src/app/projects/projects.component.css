@@ -1,5 +1,10 @@
+:host {
+  display: block;
+  /* Clears the fixed header. */
+  padding-top: 80px;
+}
+
 .projects-container {
-  /* On mobile, allow the container to grow with its content */
   height: auto;
   width: 100%;
   overflow: hidden;
@@ -9,8 +14,7 @@
 
 .projects-track {
   display: flex;
-  /* CHANGED: Added 80px top padding, 5vw left/right, 0 bottom */
-  padding: 80px 5vw 0 5vw; 
+  padding: 80px 5vw 0 5vw;
   gap: 4rem;
   height: fit-content;
 }
@@ -21,53 +25,19 @@
   max-width: 600px;
 }
 
-/* --- Responsive Styles --- */
-@media (max-width: 768px) {
-  .projects-container {
-    height: auto; /* Let height be determined by content */
-    padding: 4rem 0;
-    justify-content: center; /* Center the track horizontally */
-  }
-
-  .projects-track {
-    flex-direction: column; /* Stack cards vertically */
-    align-items: center;
-    padding: 0;
-    gap: 2rem;
-    width: 100%; /* Ensure track takes full width */
-  }
-
-  .project-card-container {
-    width: 90vw; /* Make cards wider on mobile */
-    max-width: 400px;
-  }
-
-  .title-card-container {
-      height: auto;
-      margin-bottom: 2rem;
-  }
-
-  .title-card-content h1 {
-      font-size: 4rem;
-  }
-}
-
-/* --- Card and Button Styles --- */
-.title-card-container .p-card {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  background-color: var(--surface-bento);
-  border: 2px dashed var(--accentColor);
-}
-
 .title-card-content h1 {
   font-size: 5rem;
   font-weight: 700;
   color: var(--accentColor);
 }
 
+.buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* --- PrimeNG card internals --- */
 :host ::ng-deep .p-card {
   background-color: var(--surface-card);
   border-radius: 12px;
@@ -77,7 +47,6 @@
   flex-direction: column;
   height: 100%;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  /* margin-top: 80px; <-- Removed to prevent bottom clipping of footer buttons */
 }
 
 :host ::ng-deep .p-card:hover {
@@ -103,10 +72,6 @@
   flex-direction: column;
 }
 
-:host ::ng-deep .p-card .p-card-content {
-    flex-grow: 1;
-}
-
 :host ::ng-deep .p-card .p-card-title {
   font-size: 1.75rem;
   font-weight: 700;
@@ -114,14 +79,9 @@
 }
 
 :host ::ng-deep .p-card .p-card-content {
+  flex-grow: 1;
   font-size: 1.1rem;
   line-height: 1.6;
-}
-
-.buttons {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
 }
 
 :host ::ng-deep .p-button {
@@ -142,8 +102,31 @@
   filter: brightness(1.1);
 }
 
-:host {
-  display: block;
-  /* Adds margin to the top of the component to clear the fixed header */
-  padding-top: 80px; 
+/* --- Mobile: stack the cards and scroll normally --- */
+@media (max-width: 768px) {
+  .projects-container {
+    padding: 4rem 0;
+    justify-content: center;
+  }
+
+  .projects-track {
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .project-card-container {
+    width: 90vw;
+    max-width: 400px;
+  }
+
+  .title-card-container {
+    margin-bottom: 2rem;
+  }
+
+  .title-card-content h1 {
+    font-size: 4rem;
+  }
 }

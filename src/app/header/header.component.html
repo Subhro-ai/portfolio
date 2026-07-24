@@ -1,15 +1,18 @@
-<p-menubar class="navbar" [model]="items">
+<p-menubar [model]="items">
   <ng-template pTemplate="end">
     <div class="nav-actions">
-      <a href="https://docs.google.com/document/d/191YnmeQ9ZJbYh0jzwf1mXAQxtDOFbBfLv2rLCX7v7oo/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="nav-link">
+      <a href="https://docs.google.com/document/d/191YnmeQ9ZJbYh0jzwf1mXAQxtDOFbBfLv2rLCX7v7oo/edit?usp=sharing"
+         target="_blank" rel="noopener noreferrer" class="nav-link">
         <p-button label="Resume" icon="pi pi-file" [text]="true" [plain]="true"></p-button>
       </a>
 
-      <a href="https://github.com/subhro-ai/portfolio" target="_blank" rel="noopener noreferrer" class="nav-link">
-        <p-button icon="pi pi-github" [rounded]="true" [text]="true" [plain]="true" pTooltip="View Source"></p-button>
+      <a href="https://github.com/subhro-ai/portfolio" target="_blank" rel="noopener noreferrer" class="nav-link"
+         aria-label="View source on GitHub">
+        <p-button icon="pi pi-github" [rounded]="true" [text]="true" [plain]="true"></p-button>
       </a>
 
-      <p-button [icon]="darkMode ? 'pi pi-sun' : 'pi pi-moon'" [rounded]="true" [outlined]="true" (click)="toggleDarkMode()" />
+      <p-button [icon]="darkMode ? 'pi pi-sun' : 'pi pi-moon'" [rounded]="true" [outlined]="true"
+                (click)="toggleDarkMode()" />
     </div>
   </ng-template>
 </p-menubar>
